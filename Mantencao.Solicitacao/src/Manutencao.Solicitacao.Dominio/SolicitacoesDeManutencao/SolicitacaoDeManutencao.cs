@@ -2,7 +2,7 @@
 
 namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
-    public class SolicitacaoDeManutencao
+    public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
     {
         public int SolicitanteId { get; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
