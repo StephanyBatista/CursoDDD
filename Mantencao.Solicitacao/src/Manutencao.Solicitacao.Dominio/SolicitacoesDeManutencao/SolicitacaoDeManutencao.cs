@@ -4,29 +4,27 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
     {
-        public int SolicitanteId { get; }
+        public Solicitante Solicitante { get; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
         public string Justificativa { get; }
-        public string NumeroDoContrato { get; }
-        public string EmpresaDoContrato { get; }
-        public string CnpjDaEmpresaDoContrato { get; }
+        public Contrato Contrato { get; }
         public DateTime InicioDesejadoParaManutencao { get; }
         public DateTime DataDaSolicitacao { get; set; }
 
-        public SolicitacaoDeManutencao(int solicitanteId, 
+        public SolicitacaoDeManutencao(Solicitante solicitante, 
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
             string justificativa, 
-            string numeroDoContrato, 
-            string empresaDoContrato, 
-            string cnpjDaEmpresaDoContrato, 
+            Contrato contrato,
             DateTime inicioDesejadoParaManutencao)
         {
-            SolicitanteId = solicitanteId;
+            ExcecaoDeDominio.LancarQuando(solicitante == null, "Solicitante inválido");
+            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(justificativa), "Justificativa inválida");
+            ExcecaoDeDominio.LancarQuando(contrato == null, "Contrato inválido");
+
+            Solicitante = solicitante;
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;
-            NumeroDoContrato = numeroDoContrato;
-            EmpresaDoContrato = empresaDoContrato;
-            CnpjDaEmpresaDoContrato = cnpjDaEmpresaDoContrato;
+            Contrato = contrato;
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
         }
