@@ -2,7 +2,6 @@
 using ExpectedObjects;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.SolicitacaoTestes._Util;
-using Nosbor.FluentBuilder.Lib;
 using Xunit;
 
 namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
@@ -10,9 +9,13 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
     public class SolicitacaoDeManutencaoTeste
     {
         private const string Justificativa = "Grama muito alta";
-        private readonly Contrato _contrato = FluentBuilder<Contrato>.New().Build();
+        private const int SolicitanteId = 5;
+        private const string NomeDoSoliciante = "Ricardo Almeida";
+        private const string NumeroDoContrato = "234617";
+        private const string NomeDaEmpresaDoContrato = "Grama SA";
+        private const string CnpjDaEmpresaDoContrato = "59773744000191";
+        private readonly DateTime _dataFinalDaVigenciaDoContrato = DateTime.Now.AddMonths(2);
         private readonly DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
-        private readonly Solicitante _solicitante = FluentBuilder<Solicitante>.New().Build();
         private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
 
         [Fact]
@@ -20,18 +23,22 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var solicitacao = new
             {
-                Solicitante = _solicitante,
+                Solicitante = new Solicitante(SolicitanteId, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa,
-                Contrato = _contrato,
+                Contrato = new Contrato(NumeroDoContrato, NomeDaEmpresaDoContrato, CnpjDaEmpresaDoContrato, _dataFinalDaVigenciaDoContrato),
                 InicioDesejadoParaManutencao = _inicioDesejadoParaManutencao
             };
 
             var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
-                _solicitante,
+                SolicitanteId,
+                NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 Justificativa,
-                _contrato,
+                NumeroDoContrato,
+                NomeDaEmpresaDoContrato,
+                CnpjDaEmpresaDoContrato,
+                _dataFinalDaVigenciaDoContrato,
                 _inicioDesejadoParaManutencao);
 
             solicitacao.ToExpectedObject().ShouldMatch(solicitacaoDeManutencao);
@@ -43,27 +50,36 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var dataDaSolicitacaoEsperada = DateTime.Now;
 
             var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
-                _solicitante,
+                SolicitanteId,
+                NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 Justificativa,
-                _contrato,
+                NumeroDoContrato,
+                NomeDaEmpresaDoContrato,
+                CnpjDaEmpresaDoContrato,
+                _dataFinalDaVigenciaDoContrato,
                 _inicioDesejadoParaManutencao);
 
             Assert.Equal(dataDaSolicitacaoEsperada.Date, solicitacaoDeManutencao.DataDaSolicitacao.Date);
         }
 
         [Fact]
-        public void Deve_validar_solicitante()
+        public void Deve_solicitacao_de_manutencao_iniciar_com_status_pendente()
         {
-            const string mensagemEsperada = "Solicitante inválido";
-            const Solicitante solicitanteInvalido = null;
+            var statusDaSolicitacao = StatusDaSolicitacao.Pendente;
 
-            AssertExtensions.ThrowsWithMessage(() => new SolicitacaoDeManutencao(
-                solicitanteInvalido,
+            var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
+                SolicitanteId,
+                NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 Justificativa,
-                _contrato,
-                _inicioDesejadoParaManutencao), mensagemEsperada);
+                NumeroDoContrato,
+                NomeDaEmpresaDoContrato,
+                CnpjDaEmpresaDoContrato,
+                _dataFinalDaVigenciaDoContrato,
+                _inicioDesejadoParaManutencao);
+
+            Assert.Equal(statusDaSolicitacao, solicitacaoDeManutencao.StatusDaSolicitacao);
         }
 
         [Theory]
@@ -74,25 +90,33 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             const string mensagemEsperada = "Justificativa inválida";
 
             AssertExtensions.ThrowsWithMessage(() => new SolicitacaoDeManutencao(
-                _solicitante,
+                SolicitanteId,
+                NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 justificativaInvalida,
-                _contrato,
+                NumeroDoContrato,
+                NomeDaEmpresaDoContrato,
+                CnpjDaEmpresaDoContrato,
+                _dataFinalDaVigenciaDoContrato,
                 _inicioDesejadoParaManutencao), mensagemEsperada);
         }
 
         [Fact]
-        public void Deve_validar_contrato()
+        public void Deve_validar_data_de_inicio_desejado_para_manutencao()
         {
-            const string mensagemEsperada = "Contrato inválido";
-            const Contrato contratoInvalido = null;
+            const string mensagemEsperada = "Data do inicio desejado não pode ser inferior a data de hoje";
+            var dataInvalida = DateTime.Now.AddDays(-1);
 
             AssertExtensions.ThrowsWithMessage(() => new SolicitacaoDeManutencao(
-                _solicitante,
+                SolicitanteId,
+                NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 Justificativa,
-                contratoInvalido,
-                _inicioDesejadoParaManutencao), mensagemEsperada);
+                NumeroDoContrato,
+                NomeDaEmpresaDoContrato,
+                CnpjDaEmpresaDoContrato,
+                _dataFinalDaVigenciaDoContrato,
+                dataInvalida), mensagemEsperada);
         }
     }
 }

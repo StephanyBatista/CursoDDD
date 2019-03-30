@@ -2,6 +2,11 @@
 
 namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
+    public enum StatusDaSolicitacao
+    {
+        Pendente
+    }
+
     public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
     {
         public Solicitante Solicitante { get; }
@@ -9,24 +14,26 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public string Justificativa { get; }
         public Contrato Contrato { get; }
         public DateTime InicioDesejadoParaManutencao { get; }
-        public DateTime DataDaSolicitacao { get; set; }
+        public DateTime DataDaSolicitacao { get; }
+        public StatusDaSolicitacao StatusDaSolicitacao { get; }
 
-        public SolicitacaoDeManutencao(Solicitante solicitante, 
+        public SolicitacaoDeManutencao(int solicitanteId, string nomeDoSolicitante, 
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
             string justificativa, 
-            Contrato contrato,
+            string numeroDoContrato, string nomeDaEmpresa, string cnpjDaEmpresa, DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
-            ExcecaoDeDominio.LancarQuando(solicitante == null, "Solicitante inválido");
+            
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(justificativa), "Justificativa inválida");
-            ExcecaoDeDominio.LancarQuando(contrato == null, "Contrato inválido");
+            ExcecaoDeDominio.LancarQuando(inicioDesejadoParaManutencao.Date < DateTime.Now.Date, "Data do inicio desejado não pode ser inferior a data de hoje");
 
-            Solicitante = solicitante;
+            Solicitante = new Solicitante(solicitanteId, nomeDoSolicitante);
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;
-            Contrato = contrato;
+            Contrato = new Contrato(numeroDoContrato, nomeDaEmpresa, cnpjDaEmpresa, dataFinalDaVigência);
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
+            StatusDaSolicitacao = StatusDaSolicitacao.Pendente;
         }
     }
 }
