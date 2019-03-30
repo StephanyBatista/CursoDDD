@@ -4,7 +4,7 @@ using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.SolicitacaoTestes._Util;
 using Xunit;
 
-namespace Manutencao.SolicitacaoTestes.SolicitacoesDeManutencao
+namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
     public class ContratoTeste
     {

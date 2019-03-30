@@ -2,18 +2,18 @@
 using ExpectedObjects;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.SolicitacaoTestes._Util;
-using Nosbor.FluentBuilder;
+using Nosbor.FluentBuilder.Lib;
 using Xunit;
 
-namespace Manutencao.SolicitacaoTestes.SolicitacoesDeManutencao
+namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencaoTeste
     {
-        private readonly Solicitante _solicitante = FluentBuilder<Solicitante>.New().Build();
-        private readonly Contrato _contrato = FluentBuilder<Contrato>.New().Build();
-        private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
-        private readonly DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
         private const string Justificativa = "Grama muito alta";
+        private readonly Contrato _contrato = FluentBuilder<Contrato>.New().Build();
+        private readonly DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
+        private readonly Solicitante _solicitante = FluentBuilder<Solicitante>.New().Build();
+        private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
 
         [Fact]
         public void Deve_criar_solicitacao_de_manutencao()
