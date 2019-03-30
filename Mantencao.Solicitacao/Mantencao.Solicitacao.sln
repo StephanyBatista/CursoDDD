@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manutencao.SolicitacaoTeste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Aplicacao", "src\Manutencao.Solicitacao.Aplicacao\Manutencao.Solicitacao.Aplicacao.csproj", "{E06D9C31-F37A-4D08-86F5-4264767E3DF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Infra.BancoDeDados", "src\Manutencao.Solicitacao.Infra.BancoDeDados\Manutencao.Solicitacao.Infra.BancoDeDados.csproj", "{DC2475C4-504F-462A-A548-67582898868C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E06D9C31-F37A-4D08-86F5-4264767E3DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E06D9C31-F37A-4D08-86F5-4264767E3DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E06D9C31-F37A-4D08-86F5-4264767E3DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2475C4-504F-462A-A548-67582898868C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2475C4-504F-462A-A548-67582898868C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2475C4-504F-462A-A548-67582898868C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2475C4-504F-462A-A548-67582898868C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
