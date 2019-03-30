@@ -2,6 +2,7 @@
 using ExpectedObjects;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.SolicitacaoTestes._Util;
+using Nosbor.FluentBuilder.Lib;
 using Xunit;
 
 namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
@@ -80,6 +81,16 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
                 _inicioDesejadoParaManutencao);
 
             Assert.Equal(statusDaSolicitacao, solicitacaoDeManutencao.StatusDaSolicitacao);
+        }
+
+        [Fact]
+        public void Deve_cancelar_solicitacao_de_manutencao()
+        {
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Cancelar();
+
+            Assert.Equal(StatusDaSolicitacao.Cancelada, solicitacao.StatusDaSolicitacao);
         }
 
         [Theory]

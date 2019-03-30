@@ -4,7 +4,8 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
     public enum StatusDaSolicitacao
     {
-        Pendente
+        Pendente,
+        Cancelada
     }
 
     public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
@@ -15,7 +16,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public Contrato Contrato { get; }
         public DateTime InicioDesejadoParaManutencao { get; }
         public DateTime DataDaSolicitacao { get; }
-        public StatusDaSolicitacao StatusDaSolicitacao { get; }
+        public StatusDaSolicitacao StatusDaSolicitacao { get; private set; }
 
         public SolicitacaoDeManutencao(int solicitanteId, string nomeDoSolicitante, 
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
@@ -34,6 +35,11 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
             StatusDaSolicitacao = StatusDaSolicitacao.Pendente;
+        }
+
+        public void Cancelar()
+        {
+            StatusDaSolicitacao = StatusDaSolicitacao.Cancelada;
         }
     }
 }
