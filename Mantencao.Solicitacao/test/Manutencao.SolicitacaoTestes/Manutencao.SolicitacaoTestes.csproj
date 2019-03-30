@@ -23,4 +23,10 @@
     <ProjectReference Include="..\..\src\Manutencao.Solicitacao.Dominio\Manutencao.Solicitacao.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\..\..\Users\steph\.nuget\packages\moq\4.10.1\lib\netstandard1.3\Moq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

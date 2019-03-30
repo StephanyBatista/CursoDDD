@@ -3,9 +3,8 @@ using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 
 namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 {
-    public interface ISolicitacaoDeManutencaoRepositorio
+    public interface ISolicitacaoDeManutencaoRepositorio : IRepositorio<SolicitacaoDeManutencao>
     {
-        void Adicionar(SolicitacaoDeManutencao solicitacao);
         IEnumerable<SolicitacaoDeManutencao> ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao apararGrama);
     }
 }

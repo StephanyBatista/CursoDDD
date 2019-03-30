@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Manutencao.Solicitacao.Aplicacao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Microsoft.EntityFrameworkCore;
 
 namespace Manutencao.Solicitacao.Infra.BancoDeDados.Contexto
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
