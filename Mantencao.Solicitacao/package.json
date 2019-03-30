@@ -1,0 +1,14 @@
+{
+  "name": "identidadeapicore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd ./src/Manutencao.Solicitacao.Api && dotnet run",
+    "database-update": "cd ./src/Manutencao.Solicitacao.Infra.BancoDeDados && dotnet ef --startup-project ../Manutencao.Solicitacao.Api database update",
+    "add-migration": "cd ./src/Manutencao.Solicitacao.Infra.BancoDeDados && dotnet ef --startup-project ../Manutencao.Solicitacao.Api migrations add",
+    "remove-migration": "cd ./src/Manutencao.Solicitacao.Infra.BancoDeDados && dotnet ef --startup-project ../Manutencao.Solicitacao.Api migrations remove "
+  },
+  "author": "",
+  "license": "ISC"
+}

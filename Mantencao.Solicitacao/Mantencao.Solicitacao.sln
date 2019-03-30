@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Apli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Infra.BancoDeDados", "src\Manutencao.Solicitacao.Infra.BancoDeDados\Manutencao.Solicitacao.Infra.BancoDeDados.csproj", "{DC2475C4-504F-462A-A548-67582898868C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Api", "src\Manutencao.Solicitacao.Api\Manutencao.Solicitacao.Api.csproj", "{C680AFA8-9772-42A2-A527-4E8905DA47B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DC2475C4-504F-462A-A548-67582898868C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC2475C4-504F-462A-A548-67582898868C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC2475C4-504F-462A-A548-67582898868C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C680AFA8-9772-42A2-A527-4E8905DA47B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C680AFA8-9772-42A2-A527-4E8905DA47B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C680AFA8-9772-42A2-A527-4E8905DA47B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C680AFA8-9772-42A2-A527-4E8905DA47B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,10 +4,12 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
     public class Contrato
     {
-        public string Numero { get; }
-        public string NomeDaEmpresa { get; }
-        public string CnpjDaEmpresa { get; }
-        public DateTime DataFinalDaVigencia { get; }
+        public string Numero { get; private set; }
+        public string NomeDaEmpresa { get; private set; }
+        public string CnpjDaEmpresa { get; private set; }
+        public DateTime DataFinalDaVigencia { get; private set; }
+
+        private Contrato() { }
 
         public Contrato(string numero, string nomeDaEmpresa, string cnpjDaEmpresa, DateTime dataFinalDaVigencia)
         {

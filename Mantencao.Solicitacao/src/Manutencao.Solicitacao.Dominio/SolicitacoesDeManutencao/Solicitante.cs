@@ -2,8 +2,10 @@
 {
     public class Solicitante
     {
-        public int Id { get; }
-        public string Nome { get; }
+        public int Id { get; private set; }
+        public string Nome { get; private set; }
+
+        private Solicitante() { }
 
         public Solicitante(int id, string nome)
         {

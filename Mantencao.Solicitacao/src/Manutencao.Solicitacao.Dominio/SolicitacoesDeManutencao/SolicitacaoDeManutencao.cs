@@ -10,13 +10,15 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 
     public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
     {
-        public Solicitante Solicitante { get; }
-        public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
-        public string Justificativa { get; }
-        public Contrato Contrato { get; }
-        public DateTime InicioDesejadoParaManutencao { get; }
-        public DateTime DataDaSolicitacao { get; }
+        public Solicitante Solicitante { get; private set; }
+        public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; private set; }
+        public string Justificativa { get; private set; }
+        public Contrato Contrato { get; private set; }
+        public DateTime InicioDesejadoParaManutencao { get; private set; }
+        public DateTime DataDaSolicitacao { get; private set; }
         public StatusDaSolicitacao StatusDaSolicitacao { get; private set; }
+
+        private SolicitacaoDeManutencao() { }
 
         public SolicitacaoDeManutencao(int solicitanteId, string nomeDoSolicitante, 
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
