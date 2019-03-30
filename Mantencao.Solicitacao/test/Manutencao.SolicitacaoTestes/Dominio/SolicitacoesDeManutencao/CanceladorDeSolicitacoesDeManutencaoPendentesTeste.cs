@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+﻿using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Nosbor.FluentBuilder.Lib;
 using Xunit;
 
@@ -32,20 +31,6 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var cancelador = new CanceladorDeSolicitacoesDeManutencaoPendentes();
 
             cancelador.Cancelar(null);
-        }
-    }
-
-    public class CanceladorDeSolicitacoesDeManutencaoPendentes
-    {
-        public void Cancelar(IEnumerable<SolicitacaoDeManutencao> solicitacoesDeManutencaoPendentes)
-        {
-            if (solicitacoesDeManutencaoPendentes == null)
-                return;
-
-            foreach (var solicitacaoDeManutencao in solicitacoesDeManutencaoPendentes)
-            {
-                solicitacaoDeManutencao.Cancelar();
-            }
         }
     }
 }

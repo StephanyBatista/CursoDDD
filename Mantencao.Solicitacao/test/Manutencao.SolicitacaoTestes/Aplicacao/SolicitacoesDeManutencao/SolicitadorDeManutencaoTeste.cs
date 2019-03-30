@@ -1,6 +1,7 @@
 ﻿using System;
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+using Nosbor.FluentBuilder.Lib;
 using NSubstitute;
 using Xunit;
 
@@ -8,12 +9,18 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
 {
     public class SolicitadorDeManutencaoTeste
     {
-        [Fact]
-        public void Deve_salvar_solicitacao_de_manutencao()
+        private readonly ISolicitacaoDeManutencaoRepositorio _repositorio;
+        private readonly SolicitadorDeManutencao _solicitador;
+        private readonly SolicitacaoDeManutencaoDto _dto;
+        private readonly ICanceladorDeSolicitacoesDeManutencaoPendentes _canceladorDeSolicitacoesDeManutencaoPendentes;
+
+        public SolicitadorDeManutencaoTeste()
         {
-            var repositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
-            var solicitador = new SolicitadorDeManutencao(repositorio);
-            var dto = new SolicitacaoDeManutencaoDto
+            _repositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
+            _canceladorDeSolicitacoesDeManutencaoPendentes =
+                Substitute.For<ICanceladorDeSolicitacoesDeManutencaoPendentes>();
+            _solicitador = new SolicitadorDeManutencao(_repositorio, _canceladorDeSolicitacoesDeManutencaoPendentes);
+            _dto = new SolicitacaoDeManutencaoDto
             {
                 SolicitanteId = 1,
                 NomeDoSolicitante = "Ricardo José",
@@ -25,12 +32,31 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                 DataFinalDaVigencia = DateTime.Now.AddMonths(2),
                 InicioDesejadoParaManutencao = DateTime.Now.AddMonths(2)
             };
+        }
 
-            solicitador.Solicitar(dto);
+        [Fact]
+        public void Deve_salvar_solicitacao_de_manutencao()
+        {
+            _solicitador.Solicitar(_dto);
 
-            repositorio.Received(1)
+            _repositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
-                    solicitacao.Solicitante.Id == dto.SolicitanteId));
+                    solicitacao.Solicitante.Id == _dto.SolicitanteId));
+        }
+
+        [Fact]
+        public void Deve_cancelar_solicitacoes_de_manutencao_pendentes_para_o_tipo_solicitado()
+        {
+            var solicitacoesPendentes = new[]
+            {
+                FluentBuilder<SolicitacaoDeManutencao>.New().With(solicitacao => solicitacao.StatusDaSolicitacao,
+                    StatusDaSolicitacao.Pendente).Build()
+            };
+            _repositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.ApararGrama).Returns(solicitacoesPendentes);
+
+            _solicitador.Solicitar(_dto);
+
+            _canceladorDeSolicitacoesDeManutencaoPendentes.Received(1).Cancelar(solicitacoesPendentes);
         }
     }
 }
