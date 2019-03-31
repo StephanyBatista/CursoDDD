@@ -5,7 +5,7 @@ Curso de DDD com as essenciais coisas que se deve saber antes de começar um pro
 
 Siga os passos abaixo para funcionamento do projeto.
 
-###### API Faker
+##### API Faker
 
 Para simulação de um ERP de base de contratos é utilizado json-server. Para que se faça a instalação antes é necessária a instalação do NodeJs e NPM e após executar o comando abaixo em seu terminal:
 
@@ -22,7 +22,7 @@ Um exemplo do funcionamento é mostrado com a imagem abaixo:
 Mais informações sobre o pacote, acesse https://github.com/typicode/json-server
 
 
-###### Banco de dados SQL Server
+##### Banco de dados SQL Server
 
 A aplicação utiliza banco de dados SQL Server e para maior facilidade é utlizado Docker. Docker funciona tanto para Windows, Linux ou Mac.
 
@@ -34,6 +34,6 @@ Uma vez que o comando acima foi executado. Nas próximas vezes qu for utilizar o
 
 ``docker start sqlserver``
 
-###### .Net Core
+##### .Net Core
 
 A aplicação está utilizando .Net Core com versão minima 2.2.
