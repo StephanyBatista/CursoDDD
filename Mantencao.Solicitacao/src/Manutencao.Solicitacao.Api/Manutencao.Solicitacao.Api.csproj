@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Manutencao.Solicitacao.Infra.BancoDeDados\Manutencao.Solicitacao.Infra.BancoDeDados.csproj" />
+    <ProjectReference Include="..\Manutencao.Solicitacao.Infra.ErpContracts\Manutencao.Solicitacao.Infra.ErpContracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

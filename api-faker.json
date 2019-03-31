@@ -1,0 +1,7 @@
+{
+  "contracts": [
+    	{ "id": "25443", "company": "Grama SA", "companyid": "00000000000000", "finaldate": "01/01/2025" },
+	{ "id": "25444", "company": "Elétrica SA", "companyid": "00000000000001", "finaldate": "01/01/2025" },
+	{ "id": "25445", "company": "Canos SA", "companyid": "00000000000002", "finaldate": "01/01/2025" }
+  ]
+}

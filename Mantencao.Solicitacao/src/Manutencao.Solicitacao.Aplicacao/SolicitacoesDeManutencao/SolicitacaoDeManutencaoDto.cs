@@ -9,9 +9,6 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
         public int TipoDeSolicitacaoDeManutencao { get; set; }
         public string Justificativa { get; set; }
         public string NumeroDoContrato { get; set; }
-        public string NomeDaEmpresa { get; set; }
-        public string CnpjDaEmpresa { get; set; }
         public DateTime InicioDesejadoParaManutencao { get; set; }
-        public DateTime DataFinalDaVigencia { get; set; }
     }
 }

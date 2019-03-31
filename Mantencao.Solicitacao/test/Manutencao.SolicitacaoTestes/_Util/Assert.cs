@@ -6,7 +6,7 @@ namespace Manutencao.SolicitacaoTestes._Util
 {
     public static class AssertExtensions
     {
-        public static void ThrowsWithMessage(Func<Object> testCode, string messageExpected)
+        public static void ThrowsWithMessage(Action testCode, string messageExpected)
         {
             var mensagem = Assert.Throws<ExcecaoDeDominio>(testCode).Message;
             Assert.Equal(messageExpected, mensagem);

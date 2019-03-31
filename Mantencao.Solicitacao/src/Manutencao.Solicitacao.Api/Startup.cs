@@ -1,8 +1,10 @@
-﻿using Manutencao.Solicitacao.Aplicacao;
+﻿using System.Linq;
+using Manutencao.Solicitacao.Aplicacao;
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Infra.BancoDeDados.Contexto;
 using Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio;
+using Manutencao.Solicitacao.Infra.ErpContracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +30,9 @@ namespace Manutencao.Solicitacao.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<IUnitOfWork, ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ISolicitacaoDeManutencaoRepositorio, SolicitacaoDeManutencaoRepositorio>();
+            services.AddScoped<IBuscadorDeContrato>(buscador => new BuscadorDeContrato("http://localhost:3000/contracts"));
             services.AddScoped<ICanceladorDeSolicitacoesDeManutencaoPendentes, CanceladorDeSolicitacoesDeManutencaoPendentes>();
             services.AddScoped<SolicitadorDeManutencao, SolicitadorDeManutencao>();
         }
@@ -40,7 +43,7 @@ namespace Manutencao.Solicitacao.Api
             {
                 await next.Invoke();
                 var unitOfWork = (IUnitOfWork)context.RequestServices.GetService(typeof(IUnitOfWork));
-                //await unitOfWork.Commit();
+                await unitOfWork.Commit();
             });
 
             if (env.IsDevelopment())
