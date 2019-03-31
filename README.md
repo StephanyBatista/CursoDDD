@@ -15,7 +15,11 @@ Após instalação podemos levantar nossa API faker através do comando abaixo:
 
 ``json-server --watch api-faker.json``
 
+Um exemplo do funcionamento é mostrado com a imagem abaixo:
 
+![My image](https://github.com/StephanyBatista/CursoDDD/blob/master/faker-api-screenshot.JPG)
+
+Mais informações sobre o pacote, acesse https://github.com/typicode/json-server
 
 
 ###### Banco de dados SQL Server
