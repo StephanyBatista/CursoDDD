@@ -11,6 +11,12 @@ Para simulação de um ERP de base de contratos é utilizado json-server. Para q
 
 ``npm install -g json-server``
 
+Após instalação podemos levantar nossa API faker através do comando abaixo:
+
+``json-server --watch api-faker.json``
+
+
+
 
 ###### Banco de dados SQL Server
 
