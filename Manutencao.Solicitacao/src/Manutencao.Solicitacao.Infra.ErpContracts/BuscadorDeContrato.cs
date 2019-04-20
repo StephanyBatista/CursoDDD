@@ -34,8 +34,8 @@ namespace Manutencao.Solicitacao.Infra.ErpContracts
                 return new ContratoDto
                 {
                     Numero = contratoDoErp.Id,
-                    NomeDaEmpresa = contratoDoErp.Company,
-                    CnpjDaEmpresa = contratoDoErp.CompanyId,
+                    NomeDaTerceirizada = contratoDoErp.Company,
+                    CnpjDaTerceirizada = contratoDoErp.CompanyId,
                     DataFinalDaVigencia = DateTime.Parse(contratoDoErp.FinalDate)
                 };
             }

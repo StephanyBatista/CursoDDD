@@ -33,8 +33,9 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
                     tipoDeSolicitacaoDeManutencao, 
                     dto.Justificativa,
                     contratoDto.Numero, 
-                    contratoDto.NomeDaEmpresa, 
-                    contratoDto.CnpjDaEmpresa, 
+                    contratoDto.NomeDaTerceirizada, 
+                    contratoDto.CnpjDaTerceirizada,
+                    contratoDto.GestorDoContrato,
                     contratoDto.DataFinalDaVigencia,
                     dto.InicioDesejadoParaManutencao);
 

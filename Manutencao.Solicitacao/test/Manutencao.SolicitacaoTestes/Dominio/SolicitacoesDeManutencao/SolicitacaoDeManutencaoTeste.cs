@@ -9,15 +9,31 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencaoTeste
     {
-        private const string Justificativa = "Grama muito alta";
+        private string _justificativa = "Grama muito alta";
         private const int SolicitanteId = 5;
         private const string NomeDoSoliciante = "Ricardo Almeida";
         private const string NumeroDoContrato = "234617";
-        private const string NomeDaEmpresaDoContrato = "Grama SA";
-        private const string CnpjDaEmpresaDoContrato = "59773744000191";
+        private const string NomeDaTerceirizadaDoContrato = "Grama SA";
+        private const string CnpjDaTerceirizadaDoContrato = "59773744000191";
+        private const string GestorDoContrato = "Hugo Alvez";
         private readonly DateTime _dataFinalDaVigenciaDoContrato = DateTime.Now.AddMonths(2);
-        private readonly DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
         private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
+        private DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
+
+        private SolicitacaoDeManutencao CriarNovaSolicitacao()
+        {
+            return new SolicitacaoDeManutencao(
+                SolicitanteId,
+                NomeDoSoliciante,
+                _tipoDeSolicitacaoDeManutencao,
+                _justificativa,
+                NumeroDoContrato,
+                NomeDaTerceirizadaDoContrato,
+                CnpjDaTerceirizadaDoContrato,
+                GestorDoContrato,
+                _dataFinalDaVigenciaDoContrato,
+                _inicioDesejadoParaManutencao);
+        }
 
         [Fact]
         public void Deve_criar_solicitacao_de_manutencao()
@@ -26,21 +42,12 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             {
                 Solicitante = new Solicitante(SolicitanteId, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
-                Justificativa,
-                Contrato = new Contrato(NumeroDoContrato, NomeDaEmpresaDoContrato, CnpjDaEmpresaDoContrato, _dataFinalDaVigenciaDoContrato),
+                Justificativa = _justificativa,
+                Contrato = new Contrato(NumeroDoContrato, NomeDaTerceirizadaDoContrato, CnpjDaTerceirizadaDoContrato, GestorDoContrato, _dataFinalDaVigenciaDoContrato),
                 InicioDesejadoParaManutencao = _inicioDesejadoParaManutencao
             };
 
-            var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
-                SolicitanteId,
-                NomeDoSoliciante,
-                _tipoDeSolicitacaoDeManutencao,
-                Justificativa,
-                NumeroDoContrato,
-                NomeDaEmpresaDoContrato,
-                CnpjDaEmpresaDoContrato,
-                _dataFinalDaVigenciaDoContrato,
-                _inicioDesejadoParaManutencao);
+            var solicitacaoDeManutencao = CriarNovaSolicitacao();
 
             solicitacao.ToExpectedObject().ShouldMatch(solicitacaoDeManutencao);
         }
@@ -50,16 +57,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var dataDaSolicitacaoEsperada = DateTime.Now;
 
-            var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
-                SolicitanteId,
-                NomeDoSoliciante,
-                _tipoDeSolicitacaoDeManutencao,
-                Justificativa,
-                NumeroDoContrato,
-                NomeDaEmpresaDoContrato,
-                CnpjDaEmpresaDoContrato,
-                _dataFinalDaVigenciaDoContrato,
-                _inicioDesejadoParaManutencao);
+            var solicitacaoDeManutencao = CriarNovaSolicitacao();
 
             Assert.Equal(dataDaSolicitacaoEsperada.Date, solicitacaoDeManutencao.DataDaSolicitacao.Date);
         }
@@ -69,16 +67,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var statusDaSolicitacao = StatusDaSolicitacao.Pendente;
 
-            var solicitacaoDeManutencao = new SolicitacaoDeManutencao(
-                SolicitanteId,
-                NomeDoSoliciante,
-                _tipoDeSolicitacaoDeManutencao,
-                Justificativa,
-                NumeroDoContrato,
-                NomeDaEmpresaDoContrato,
-                CnpjDaEmpresaDoContrato,
-                _dataFinalDaVigenciaDoContrato,
-                _inicioDesejadoParaManutencao);
+            var solicitacaoDeManutencao = CriarNovaSolicitacao();
 
             Assert.Equal(statusDaSolicitacao, solicitacaoDeManutencao.StatusDaSolicitacao);
         }
@@ -99,17 +88,9 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         public void Deve_validar_justificativa(string justificativaInvalida)
         {
             const string mensagemEsperada = "Justificativa inválida";
+            _justificativa = justificativaInvalida;
 
-            AssertExtensions.ThrowsWithMessage(() => new SolicitacaoDeManutencao(
-                SolicitanteId,
-                NomeDoSoliciante,
-                _tipoDeSolicitacaoDeManutencao,
-                justificativaInvalida,
-                NumeroDoContrato,
-                NomeDaEmpresaDoContrato,
-                CnpjDaEmpresaDoContrato,
-                _dataFinalDaVigenciaDoContrato,
-                _inicioDesejadoParaManutencao), mensagemEsperada);
+            AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
         }
 
         [Fact]
@@ -117,17 +98,9 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             const string mensagemEsperada = "Data do inicio desejado não pode ser inferior a data de hoje";
             var dataInvalida = DateTime.Now.AddDays(-1);
+            _inicioDesejadoParaManutencao = dataInvalida;
 
-            AssertExtensions.ThrowsWithMessage(() => new SolicitacaoDeManutencao(
-                SolicitanteId,
-                NomeDoSoliciante,
-                _tipoDeSolicitacaoDeManutencao,
-                Justificativa,
-                NumeroDoContrato,
-                NomeDaEmpresaDoContrato,
-                CnpjDaEmpresaDoContrato,
-                _dataFinalDaVigenciaDoContrato,
-                dataInvalida), mensagemEsperada);
+            AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
         }
     }
 }

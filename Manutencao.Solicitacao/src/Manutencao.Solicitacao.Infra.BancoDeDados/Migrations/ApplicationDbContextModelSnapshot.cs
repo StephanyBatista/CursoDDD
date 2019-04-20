@@ -45,11 +45,13 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
                         {
                             b1.Property<string>("SolicitacaoDeManutencaoId");
 
-                            b1.Property<string>("CnpjDaEmpresa");
+                            b1.Property<string>("CnpjDaTerceirizada");
 
                             b1.Property<DateTime>("DataFinalDaVigencia");
 
-                            b1.Property<string>("NomeDaEmpresa");
+                            b1.Property<string>("GestorDoContrato");
+
+                            b1.Property<string>("NomeDaTerceirizada");
 
                             b1.Property<string>("Numero");
 

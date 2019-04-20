@@ -23,7 +23,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public SolicitacaoDeManutencao(int solicitanteId, string nomeDoSolicitante, 
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
             string justificativa, 
-            string numeroDoContrato, string nomeDaEmpresa, string cnpjDaEmpresa, DateTime dataFinalDaVigência,
+            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
             
@@ -33,7 +33,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             Solicitante = new Solicitante(solicitanteId, nomeDoSolicitante);
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;
-            Contrato = new Contrato(numeroDoContrato, nomeDaEmpresa, cnpjDaEmpresa, dataFinalDaVigência);
+            Contrato = new Contrato(numeroDoContrato, nomeDaTerceirizada, cnpjDaTerceirizada, gestorDoContrato, dataFinalDaVigência);
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
             StatusDaSolicitacao = StatusDaSolicitacao.Pendente;

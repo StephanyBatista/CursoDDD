@@ -31,8 +31,8 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
             _contratoDto = new ContratoDto
             {
                 Numero = _dto.NumeroDoContrato,
-                NomeDaEmpresa = "Grama SA",
-                CnpjDaEmpresa = "00000000000000",
+                NomeDaTerceirizada = "Grama SA",
+                CnpjDaTerceirizada = "00000000000000",
                 DataFinalDaVigencia = DateTime.Now.AddMonths(1)
             };
 
@@ -62,8 +62,8 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
             _repositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
                     solicitacao.Contrato.Numero == _contratoDto.Numero &&
-                    solicitacao.Contrato.NomeDaEmpresa == _contratoDto.NomeDaEmpresa &&
-                    solicitacao.Contrato.CnpjDaEmpresa == _contratoDto.CnpjDaEmpresa &&
+                    solicitacao.Contrato.NomeDaTerceirizada == _contratoDto.NomeDaTerceirizada &&
+                    solicitacao.Contrato.CnpjDaTerceirizada == _contratoDto.CnpjDaTerceirizada &&
                     solicitacao.Contrato.DataFinalDaVigencia == _contratoDto.DataFinalDaVigencia));
         }
 

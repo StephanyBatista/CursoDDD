@@ -5,24 +5,26 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
     public class Contrato
     {
         public string Numero { get; private set; }
-        public string NomeDaEmpresa { get; private set; }
-        public string CnpjDaEmpresa { get; private set; }
+        public string NomeDaTerceirizada { get; private set; }
+        public string CnpjDaTerceirizada { get; private set; }
+        public string GestorDoContrato { get; private set; }
         public DateTime DataFinalDaVigencia { get; private set; }
 
         private Contrato() { }
 
-        public Contrato(string numero, string nomeDaEmpresa, string cnpjDaEmpresa, DateTime dataFinalDaVigencia)
+        public Contrato(string numero, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigencia)
         {
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(numero), "Número do contrato é inválido");
-            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nomeDaEmpresa), "Nome da empresa contrato é inválido");
+            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nomeDaTerceirizada), "Nome da terceirizada é inválida");
             ExcecaoDeDominio.LancarQuando(
-                string.IsNullOrEmpty(cnpjDaEmpresa) || 
-                cnpjDaEmpresa.Length != 14, "CNPJ da empresa do contrato é inválido");
+                string.IsNullOrEmpty(cnpjDaTerceirizada) || 
+                cnpjDaTerceirizada.Length != 14, "CNPJ da terceirizada é inválida");
             ExcecaoDeDominio.LancarQuando(dataFinalDaVigencia.Date < DateTime.Now.Date, "Vigência do contrato está vencido");
 
             Numero = numero;
-            NomeDaEmpresa = nomeDaEmpresa;
-            CnpjDaEmpresa = cnpjDaEmpresa;
+            NomeDaTerceirizada = nomeDaTerceirizada;
+            CnpjDaTerceirizada = cnpjDaTerceirizada;
+            GestorDoContrato = gestorDoContrato;
             DataFinalDaVigencia = dataFinalDaVigencia;
         }
     }

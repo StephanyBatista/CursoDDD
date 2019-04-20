@@ -9,9 +9,10 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
     public class ContratoTeste
     {
         private const string Numero = "224587";
-        private const string NomeDaEmpresa = "Gramas SA";
-        private const string CnpjDaEmpresa = "90994785000158";
-        private readonly DateTime _dataFinalDaVigencia = DateTime.Now.AddMonths(1);
+        private const string NomeDaTerceirizada = "Gramas SA";
+        private const string CnpjDaTerceirizada = "90994785000158";
+        private const string GestorDoContrato = "Hugo Alvez";
+        private readonly DateTime DataFinalDaVigencia = DateTime.Now.AddMonths(1);
 
         [Fact]
         public void Deve_criar_contrato()
@@ -19,12 +20,13 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var contratoEsperado = new
             {
                 Numero,
-                NomeDaEmpresa,
-                CnpjDaEmpresa,
-                DataFinalDaVigencia = _dataFinalDaVigencia
+                NomeDaTerceirizada,
+                CnpjDaTerceirizada,
+                GestorDoContrato,
+                DataFinalDaVigencia
             };
 
-            var contrato = new Contrato(Numero, NomeDaEmpresa, CnpjDaEmpresa, _dataFinalDaVigencia);
+            var contrato = new Contrato(Numero, NomeDaTerceirizada, CnpjDaTerceirizada, GestorDoContrato, DataFinalDaVigencia);
 
             contratoEsperado.ToExpectedObject().ShouldMatch(contrato);
         }
@@ -37,29 +39,29 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             const string mensagemEsperada = "Número do contrato é inválido";
 
             AssertExtensions.ThrowsWithMessage(() =>
-                new Contrato(numeroDoContratoInvalido, NomeDaEmpresa, CnpjDaEmpresa, _dataFinalDaVigencia), mensagemEsperada);
+                new Contrato(numeroDoContratoInvalido, NomeDaTerceirizada, CnpjDaTerceirizada, GestorDoContrato, DataFinalDaVigencia), mensagemEsperada);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Deve_validar_nome_da_empresa(string nomeDaEmpresaInvalido)
+        public void Deve_validar_nome_da_terceirizada(string nomeDaTerceirizadaInvalida)
         {
-            const string mensagemEsperada = "Nome da empresa contrato é inválido";
+            const string mensagemEsperada = "Nome da terceirizada é inválida";
 
             AssertExtensions.ThrowsWithMessage(() =>
-                new Contrato(Numero, nomeDaEmpresaInvalido, CnpjDaEmpresa, _dataFinalDaVigencia), mensagemEsperada);
+                new Contrato(Numero, nomeDaTerceirizadaInvalida, CnpjDaTerceirizada, GestorDoContrato, DataFinalDaVigencia), mensagemEsperada);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Deve_validar_cnpj_da_empresa(string cnpjDaEmpresaInvalido)
+        public void Deve_validar_cnpj_da_terceirizada(string cnpjDaTerceirizadaInvalido)
         {
-            const string mensagemEsperada = "CNPJ da empresa do contrato é inválido";
+            const string mensagemEsperada = "CNPJ da terceirizada é inválida";
 
             AssertExtensions.ThrowsWithMessage(() =>
-                new Contrato(Numero, NomeDaEmpresa, cnpjDaEmpresaInvalido, _dataFinalDaVigencia), mensagemEsperada);
+                new Contrato(Numero, NomeDaTerceirizada, cnpjDaTerceirizadaInvalido, GestorDoContrato, DataFinalDaVigencia), mensagemEsperada);
         }
 
         [Fact]
@@ -69,7 +71,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var dataDaVigenciaDoContratoVencida = DateTime.Now.AddDays(-1);
 
             AssertExtensions.ThrowsWithMessage(() =>
-                new Contrato(Numero, NomeDaEmpresa, CnpjDaEmpresa, dataDaVigenciaDoContratoVencida), mensagemEsperada);
+                new Contrato(Numero, NomeDaTerceirizada, CnpjDaTerceirizada, GestorDoContrato, dataDaVigenciaDoContratoVencida), mensagemEsperada);
         }
     }
 }

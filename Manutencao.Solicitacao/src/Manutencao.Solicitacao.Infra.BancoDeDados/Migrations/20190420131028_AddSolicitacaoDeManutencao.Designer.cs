@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190330155443_AddSolicitacaoDeManutencao")]
+    [Migration("20190420131028_AddSolicitacaoDeManutencao")]
     partial class AddSolicitacaoDeManutencao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,11 +47,13 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
                         {
                             b1.Property<string>("SolicitacaoDeManutencaoId");
 
-                            b1.Property<string>("CnpjDaEmpresa");
+                            b1.Property<string>("CnpjDaTerceirizada");
 
                             b1.Property<DateTime>("DataFinalDaVigencia");
 
-                            b1.Property<string>("NomeDaEmpresa");
+                            b1.Property<string>("GestorDoContrato");
+
+                            b1.Property<string>("NomeDaTerceirizada");
 
                             b1.Property<string>("Numero");
 
