@@ -64,6 +64,17 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
                 new Contrato(Numero, NomeDaTerceirizada, cnpjDaTerceirizadaInvalido, GestorDoContrato, DataFinalDaVigencia), mensagemEsperada);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Deve_validar_gestor_do_contrato(string gestorDoContratoInvalido)
+        {
+            const string mensagemEsperada = "Gestor do contrato é inválido";
+
+            AssertExtensions.ThrowsWithMessage(() =>
+                new Contrato(Numero, NomeDaTerceirizada, CnpjDaTerceirizada, gestorDoContratoInvalido, DataFinalDaVigencia), mensagemEsperada);
+        }
+
         [Fact]
         public void Deve_validar_data_de_vigencia_do_contrato()
         {

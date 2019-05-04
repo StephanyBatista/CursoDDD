@@ -19,6 +19,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             ExcecaoDeDominio.LancarQuando(
                 string.IsNullOrEmpty(cnpjDaTerceirizada) || 
                 cnpjDaTerceirizada.Length != 14, "CNPJ da terceirizada é inválida");
+            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(gestorDoContrato), "Gestor do contrato é inválido");
             ExcecaoDeDominio.LancarQuando(dataFinalDaVigencia.Date < DateTime.Now.Date, "Vigência do contrato está vencido");
 
             Numero = numero;
