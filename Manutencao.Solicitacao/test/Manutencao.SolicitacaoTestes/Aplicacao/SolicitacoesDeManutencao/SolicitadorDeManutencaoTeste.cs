@@ -1,6 +1,8 @@
 ﻿using System;
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
+using Manutencao.Solicitacao.Aplicacao.Subsidiarias;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Manutencao.SolicitacaoTestes._Util;
 using Nosbor.FluentBuilder.Lib;
 using NSubstitute;
@@ -14,13 +16,15 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         private readonly SolicitacaoDeManutencaoDto _dto;
         private readonly SolicitadorDeManutencao _solicitador;
         private readonly IBuscadorDeContrato _buscadorDeContrato;
-        private readonly ISolicitacaoDeManutencaoRepositorio _repositorio;
+        private readonly ISolicitacaoDeManutencaoRepositorio _solicitacaoDeManutencaoRepositorio;
         private readonly ICanceladorDeSolicitacoesDeManutencaoPendentes _canceladorDeSolicitacoesDeManutencaoPendentes;
+        private readonly Subsidiaria _subsidiaria;
 
         public SolicitadorDeManutencaoTeste()
         {
             _dto = new SolicitacaoDeManutencaoDto
             {
+                SubsidiariaId = "XPTO-ABC",
                 SolicitanteId = 1,
                 NomeDoSolicitante = "Ricardo José",
                 TipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama.GetHashCode(),
@@ -32,15 +36,19 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
             {
                 Numero = _dto.NumeroDoContrato,
                 NomeDaTerceirizada = "Grama SA",
+                GestorDoContrato = "Edivaldo Pereira",
                 CnpjDaTerceirizada = "00000000000000",
                 DataFinalDaVigencia = DateTime.Now.AddMonths(1)
             };
 
-            _repositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
+            _solicitacaoDeManutencaoRepositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
+            var subsidiariaRepositorio = Substitute.For<ISubsidiariaRepositorio>();
+            _subsidiaria = FluentBuilder<Subsidiaria>.New().Build();
+            subsidiariaRepositorio.ObterPorId(_dto.SubsidiariaId).Returns(_subsidiaria);
             _canceladorDeSolicitacoesDeManutencaoPendentes = Substitute.For<ICanceladorDeSolicitacoesDeManutencaoPendentes>();
             _buscadorDeContrato = Substitute.For<IBuscadorDeContrato>();
             _buscadorDeContrato.Buscar(_dto.NumeroDoContrato).Returns(_contratoDto);
-            _solicitador = new SolicitadorDeManutencao(_repositorio, _buscadorDeContrato, _canceladorDeSolicitacoesDeManutencaoPendentes);
+            _solicitador = new SolicitadorDeManutencao(_solicitacaoDeManutencaoRepositorio, subsidiariaRepositorio, _buscadorDeContrato, _canceladorDeSolicitacoesDeManutencaoPendentes);
             
         }
 
@@ -49,7 +57,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         {
             _solicitador.Solicitar(_dto);
 
-            _repositorio.Received(1)
+            _solicitacaoDeManutencaoRepositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
                     solicitacao.Solicitante.Id == _dto.SolicitanteId));
         }
@@ -59,7 +67,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         {
             _solicitador.Solicitar(_dto);
 
-            _repositorio.Received(1)
+            _solicitacaoDeManutencaoRepositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
                     solicitacao.Contrato.Numero == _contratoDto.Numero &&
                     solicitacao.Contrato.NomeDaTerceirizada == _contratoDto.NomeDaTerceirizada &&
@@ -77,6 +85,16 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         }
 
         [Fact]
+        public void Deve_solicitacao_criada_ter_subsidiaria()
+        {
+            _solicitador.Solicitar(_dto);
+
+            _solicitacaoDeManutencaoRepositorio.Received(1)
+                .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
+                    solicitacao.Subsidiaria == _subsidiaria));
+        }
+
+        [Fact]
         public void Deve_cancelar_solicitacoes_de_manutencao_pendentes_para_o_tipo_solicitado()
         {
             var solicitacoesPendentes = new[]
@@ -84,7 +102,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                 FluentBuilder<SolicitacaoDeManutencao>.New().With(solicitacao => solicitacao.StatusDaSolicitacao,
                     StatusDaSolicitacao.Pendente).Build()
             };
-            _repositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.ApararGrama).Returns(solicitacoesPendentes);
+            _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.ApararGrama).Returns(solicitacoesPendentes);
 
             _solicitador.Solicitar(_dto);
 

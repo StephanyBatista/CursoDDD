@@ -1,6 +1,7 @@
 ﻿using System;
 using ExpectedObjects;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Manutencao.SolicitacaoTestes._Util;
 using Nosbor.FluentBuilder.Lib;
 using Xunit;
@@ -19,10 +20,12 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         private readonly DateTime _dataFinalDaVigenciaDoContrato = DateTime.Now.AddMonths(2);
         private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
         private DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
+        private Subsidiaria _subsidiaria = FluentBuilder<Subsidiaria>.New().Build();
 
         private SolicitacaoDeManutencao CriarNovaSolicitacao()
         {
             return new SolicitacaoDeManutencao(
+                _subsidiaria,
                 SolicitanteId,
                 NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
@@ -40,6 +43,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var solicitacao = new
             {
+                Subsidiaria = _subsidiaria,
                 Solicitante = new Solicitante(SolicitanteId, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa = _justificativa,
@@ -70,6 +74,15 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var solicitacaoDeManutencao = CriarNovaSolicitacao();
 
             Assert.Equal(statusDaSolicitacao, solicitacaoDeManutencao.StatusDaSolicitacao);
+        }
+
+        [Fact]
+        public void Deve_validar_subsidiaria()
+        {
+            const string mensagemEsperada = "Subsidiária é inválida";
+            _subsidiaria = null;
+
+            AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
         }
 
         [Fact]

@@ -4,6 +4,7 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencaoDto
     {
+        public string SubsidiariaId { get; set; }
         public int SolicitanteId { get; set; }
         public string NomeDoSolicitante { get; set; }
         public int TipoDeSolicitacaoDeManutencao { get; set; }

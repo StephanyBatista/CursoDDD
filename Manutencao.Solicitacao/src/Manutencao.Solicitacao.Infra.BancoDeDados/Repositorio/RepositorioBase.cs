@@ -6,7 +6,7 @@ using Manutencao.Solicitacao.Infra.BancoDeDados.Contexto;
 
 namespace Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio
 {
-    public class RepositorioBase<TEntidade> : IRepositorio<TEntidade> where TEntidade : Entidade<TEntidade>
+    public class RepositorioBase<TEntidade> : IRepositorio<TEntidade> where TEntidade : Entidade
     {
         protected readonly ApplicationDbContext Context;
 

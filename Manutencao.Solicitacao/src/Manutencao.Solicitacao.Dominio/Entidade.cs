@@ -2,7 +2,7 @@
 
 namespace Manutencao.Solicitacao.Dominio
 {
-    public class Entidade<TEntidade>
+    public class Entidade
     {
         public string Id { get; set; }
 

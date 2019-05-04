@@ -1,4 +1,5 @@
 ﻿using System;
+using Manutencao.Solicitacao.Dominio.Subsidiarias;
 
 namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
@@ -8,9 +9,10 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         Cancelada
     }
 
-    public class SolicitacaoDeManutencao : Entidade<SolicitacaoDeManutencao>
+    public class SolicitacaoDeManutencao : Entidade
     {
         public Solicitante Solicitante { get; private set; }
+        public Subsidiaria Subsidiaria { get; private set; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; private set; }
         public string Justificativa { get; private set; }
         public Contrato Contrato { get; private set; }
@@ -20,17 +22,20 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 
         private SolicitacaoDeManutencao() { }
 
-        public SolicitacaoDeManutencao(int solicitanteId, string nomeDoSolicitante, 
-            TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao, 
-            string justificativa, 
-            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigência,
+        public SolicitacaoDeManutencao(Subsidiaria subsidiaria, int solicitanteId, string nomeDoSolicitante,
+            TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao,
+            string justificativa,
+            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato,
+            DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
-            
+
+            ExcecaoDeDominio.LancarQuando(subsidiaria == null, "Subsidiária é inválida");
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(justificativa), "Justificativa inválida");
             ExcecaoDeDominio.LancarQuando(inicioDesejadoParaManutencao.Date < DateTime.Now.Date, "Data do inicio desejado não pode ser inferior a data de hoje");
 
             Solicitante = new Solicitante(solicitanteId, nomeDoSolicitante);
+            Subsidiaria = subsidiaria;
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;
             Contrato = new Contrato(numeroDoContrato, nomeDaTerceirizada, cnpjDaTerceirizada, gestorDoContrato, dataFinalDaVigência);
