@@ -2,16 +2,16 @@
 {
     public class Solicitante
     {
-        public int Id { get; private set; }
+        public int Identificador { get; private set; }
         public string Nome { get; private set; }
 
         private Solicitante() { }
 
-        public Solicitante(int id, string nome)
+        public Solicitante(int identificador, string nome)
         {
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nome), "Nome do solicitante é inválido");
 
-            Id = id;
+            Identificador = identificador;
             Nome = nome;
         }
     }

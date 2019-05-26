@@ -2,6 +2,9 @@
 {
     public enum TipoDeSolicitacaoDeManutencao
     {
-        ApararGrama
+        Jardinagem,
+        Pintura,
+        Eletrica,
+        Construção
     }
 }

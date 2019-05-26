@@ -6,7 +6,7 @@
 
         public Subsidiaria(string nome)
         {
-            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nome), "Nome da subsidiária é invalido");
+            ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nome), "Nome da subsidiária é inválido");
 
             Nome = nome;
         }

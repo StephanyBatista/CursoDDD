@@ -27,7 +27,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                 SubsidiariaId = "XPTO-ABC",
                 SolicitanteId = 1,
                 NomeDoSolicitante = "Ricardo José",
-                TipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama.GetHashCode(),
+                TipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.Jardinagem.GetHashCode(),
                 Justificativa = "Grama Alta",
                 NumeroDoContrato = "2135",
                 InicioDesejadoParaManutencao = DateTime.Now.AddMonths(2)
@@ -59,7 +59,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
 
             _solicitacaoDeManutencaoRepositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
-                    solicitacao.Solicitante.Id == _dto.SolicitanteId));
+                    solicitacao.Solicitante.Identificador == _dto.SolicitanteId));
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                 FluentBuilder<SolicitacaoDeManutencao>.New().With(solicitacao => solicitacao.StatusDaSolicitacao,
                     StatusDaSolicitacao.Pendente).Build()
             };
-            _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.ApararGrama).Returns(solicitacoesPendentes);
+            _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.Jardinagem).Returns(solicitacoesPendentes);
 
             _solicitador.Solicitar(_dto);
 

@@ -21,7 +21,7 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
 
             modelBuilder.Entity("Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao.SolicitacaoDeManutencao", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("Identificador")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataDaSolicitacao");
@@ -34,7 +34,7 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
 
                     b.Property<int>("TipoDeSolicitacaoDeManutencao");
 
-                    b.HasKey("Id");
+                    b.HasKey("Identificador");
 
                     b.ToTable("SolicitacaoDeManutecao");
                 });
@@ -69,7 +69,7 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
                         {
                             b1.Property<string>("SolicitacaoDeManutencaoId");
 
-                            b1.Property<int>("Id");
+                            b1.Property<int>("Identificador");
 
                             b1.Property<string>("Nome");
 

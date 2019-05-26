@@ -3,12 +3,6 @@ using Manutencao.Solicitacao.Dominio.Subsidiarias;
 
 namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
-    public enum StatusDaSolicitacao
-    {
-        Pendente,
-        Cancelada
-    }
-
     public class SolicitacaoDeManutencao : Entidade
     {
         public Solicitante Solicitante { get; private set; }
@@ -22,11 +16,11 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 
         private SolicitacaoDeManutencao() { }
 
-        public SolicitacaoDeManutencao(Subsidiaria subsidiaria, int solicitanteId, string nomeDoSolicitante,
+        public SolicitacaoDeManutencao(Subsidiaria subsidiaria, 
+            int identificadorDoSolicitante, string nomeDoSolicitante,
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao,
             string justificativa,
-            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato,
-            DateTime dataFinalDaVigência,
+            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
 
@@ -34,7 +28,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(justificativa), "Justificativa inválida");
             ExcecaoDeDominio.LancarQuando(inicioDesejadoParaManutencao.Date < DateTime.Now.Date, "Data do inicio desejado não pode ser inferior a data de hoje");
 
-            Solicitante = new Solicitante(solicitanteId, nomeDoSolicitante);
+            Solicitante = new Solicitante(identificadorDoSolicitante, nomeDoSolicitante);
             Subsidiaria = subsidiaria;
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;

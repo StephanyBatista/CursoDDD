@@ -2,11 +2,11 @@
 
 namespace Manutencao.Solicitacao.Dominio
 {
-    public class Entidade
+    public abstract class Entidade
     {
         public string Id { get; set; }
 
-        public Entidade()
+        protected Entidade()
         {
             Id = Guid.NewGuid().ToString();
         }

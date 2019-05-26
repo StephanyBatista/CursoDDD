@@ -10,15 +10,15 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencaoTeste
     {
-        private string _justificativa = "Grama muito alta";
-        private const int SolicitanteId = 5;
+        private const int IdentificadorDoSolicitante = 5;
         private const string NomeDoSoliciante = "Ricardo Almeida";
         private const string NumeroDoContrato = "234617";
         private const string NomeDaTerceirizadaDoContrato = "Grama SA";
         private const string CnpjDaTerceirizadaDoContrato = "59773744000191";
         private const string GestorDoContrato = "Hugo Alvez";
         private readonly DateTime _dataFinalDaVigenciaDoContrato = DateTime.Now.AddMonths(2);
-        private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.ApararGrama;
+        private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.Jardinagem;
+        private string _justificativa = "Grama muito alta";
         private DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
         private Subsidiaria _subsidiaria = FluentBuilder<Subsidiaria>.New().Build();
 
@@ -26,7 +26,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             return new SolicitacaoDeManutencao(
                 _subsidiaria,
-                SolicitanteId,
+                IdentificadorDoSolicitante,
                 NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
                 _justificativa,
@@ -44,7 +44,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var solicitacao = new
             {
                 Subsidiaria = _subsidiaria,
-                Solicitante = new Solicitante(SolicitanteId, NomeDoSoliciante),
+                Solicitante = new Solicitante(IdentificadorDoSolicitante, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa = _justificativa,
                 Contrato = new Contrato(NumeroDoContrato, NomeDaTerceirizadaDoContrato, CnpjDaTerceirizadaDoContrato, GestorDoContrato, _dataFinalDaVigenciaDoContrato),
