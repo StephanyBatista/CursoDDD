@@ -25,7 +25,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.Subsidiarias
         [InlineData(null)]
         public void Deve_validar_nome(string nomeInvalido)
         {
-            const string mensagemEsperada = "Nome da subsidiária é invalido";
+            const string mensagemEsperada = "Nome da subsidiária é inválido";
 
             AssertExtensions.ThrowsWithMessage(() => new Subsidiaria(nomeInvalido), mensagemEsperada);
         }

@@ -2,7 +2,7 @@
 {
     public class Subsidiaria : Entidade
     {
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
 
         public Subsidiaria(string nome)
         {
