@@ -25,7 +25,7 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 
         public void Solicitar(SolicitacaoDeManutencaoDto dto)
         {
-            var solicitacao = _subsidiariaRepositorio.ObterPorId(dto.SubsidiariaId);
+            var subsidiaria = _subsidiariaRepositorio.ObterPorId(dto.SubsidiariaId);
 
             var contratoDto = _buscadorDeContrato.Buscar(dto.NumeroDoContrato).Result;
             ExcecaoDeDominio.LancarQuando(contratoDto == null, "Contrato não encontrado no ERP");
@@ -34,7 +34,7 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
                 Enum.Parse<TipoDeSolicitacaoDeManutencao>(dto.TipoDeSolicitacaoDeManutencao.ToString());
             var solicitacaoDeManutencao = 
                 new SolicitacaoDeManutencao(
-                    solicitacao,
+                    subsidiaria,
                     dto.SolicitanteId, 
                     dto.NomeDoSolicitante,
                     tipoDeSolicitacaoDeManutencao, 
