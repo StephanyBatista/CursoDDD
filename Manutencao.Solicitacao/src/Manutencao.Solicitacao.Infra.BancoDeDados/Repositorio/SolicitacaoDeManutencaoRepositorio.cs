@@ -2,6 +2,7 @@
 using System.Linq;
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Manutencao.Solicitacao.Infra.BancoDeDados.Contexto;
 
 namespace Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio
@@ -12,9 +13,13 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio
         {
         }
 
-        public IEnumerable<SolicitacaoDeManutencao> ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao)
+        public IEnumerable<SolicitacaoDeManutencao> ObterPendentesDoTipo(
+            TipoDeSolicitacaoDeManutencao tipo, Subsidiaria subsidiaria)
         {
-            return Context.Set<SolicitacaoDeManutencao>().Where(entidade => entidade.TipoDeSolicitacaoDeManutencao == tipoDeSolicitacaoDeManutencao);
+            return Context.Set<SolicitacaoDeManutencao>()
+                .Where(entidade => 
+                    entidade.TipoDeSolicitacaoDeManutencao == tipo &&
+                    entidade.Subsidiaria == subsidiaria);
         }
     }
 }

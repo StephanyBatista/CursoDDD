@@ -102,7 +102,9 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                 FluentBuilder<SolicitacaoDeManutencao>.New().With(solicitacao => solicitacao.StatusDaSolicitacao,
                     StatusDaSolicitacao.Pendente).Build()
             };
-            _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(TipoDeSolicitacaoDeManutencao.Jardinagem).Returns(solicitacoesPendentes);
+            _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(
+                TipoDeSolicitacaoDeManutencao.Jardinagem,
+                _subsidiaria).Returns(solicitacoesPendentes);
 
             _solicitador.Solicitar(_dto);
 

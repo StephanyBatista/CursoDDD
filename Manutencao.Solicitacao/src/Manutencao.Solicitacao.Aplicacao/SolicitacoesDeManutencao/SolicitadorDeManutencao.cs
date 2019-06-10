@@ -47,7 +47,8 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
                     dto.InicioDesejadoParaManutencao);
 
             var solicitacoesDeManutencaoPendentes =
-                _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(tipoDeSolicitacaoDeManutencao);
+                _solicitacaoDeManutencaoRepositorio
+                    .ObterPendentesDoTipo(tipoDeSolicitacaoDeManutencao, subsidiaria);
             _canceladorDeSolicitacoesDeManutencaoPendentes.Cancelar(solicitacoesDeManutencaoPendentes);
 
             _solicitacaoDeManutencaoRepositorio.Adicionar(solicitacaoDeManutencao);
