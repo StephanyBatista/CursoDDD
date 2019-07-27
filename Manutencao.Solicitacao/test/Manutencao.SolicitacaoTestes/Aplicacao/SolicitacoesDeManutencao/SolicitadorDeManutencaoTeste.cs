@@ -43,13 +43,13 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
 
             _solicitacaoDeManutencaoRepositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
             var subsidiariaRepositorio = Substitute.For<ISubsidiariaRepositorio>();
-            _subsidiaria = FluentBuilder<Subsidiaria>.New().Build();
+            _subsidiaria = FluentBuilder<Subsidiaria>.New().With(s => s.Id, _dto.SubsidiariaId).Build();
             subsidiariaRepositorio.ObterPorId(_dto.SubsidiariaId).Returns(_subsidiaria);
             _canceladorDeSolicitacoesDeManutencaoPendentes = Substitute.For<ICanceladorDeSolicitacoesDeManutencaoPendentes>();
             _buscadorDeContrato = Substitute.For<IBuscadorDeContrato>();
             _buscadorDeContrato.Buscar(_dto.NumeroDoContrato).Returns(_contratoDto);
             _solicitador = new SolicitadorDeManutencao(_solicitacaoDeManutencaoRepositorio, subsidiariaRepositorio, _buscadorDeContrato, _canceladorDeSolicitacoesDeManutencaoPendentes);
-            
+
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         public void Deve_validar_contrato_quando_nao_encontrado_no_erp()
         {
             const string mensagemEsperada = "Contrato não encontrado no ERP";
-            _buscadorDeContrato.Buscar(_dto.NumeroDoContrato).Returns((ContratoDto) null);
+            _buscadorDeContrato.Buscar(_dto.NumeroDoContrato).Returns((ContratoDto)null);
 
             AssertExtensions.ThrowsWithMessage(() => _solicitador.Solicitar(_dto), mensagemEsperada);
         }
@@ -91,7 +91,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
 
             _solicitacaoDeManutencaoRepositorio.Received(1)
                 .Adicionar(Arg.Is<SolicitacaoDeManutencao>(solicitacao =>
-                    solicitacao.Subsidiaria == _subsidiaria));
+                    solicitacao.IdentificadorDaSubsidiaria == _subsidiaria.Id));
         }
 
         [Fact]
@@ -103,8 +103,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
                     StatusDaSolicitacao.Pendente).Build()
             };
             _solicitacaoDeManutencaoRepositorio.ObterPendentesDoTipo(
-                TipoDeSolicitacaoDeManutencao.Jardinagem,
-                _subsidiaria).Returns(solicitacoesPendentes);
+                TipoDeSolicitacaoDeManutencao.Jardinagem, _subsidiaria.Id).Returns(solicitacoesPendentes);
 
             _solicitador.Solicitar(_dto);
 

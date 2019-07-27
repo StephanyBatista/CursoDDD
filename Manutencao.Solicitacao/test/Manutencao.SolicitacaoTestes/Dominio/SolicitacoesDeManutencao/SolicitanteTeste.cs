@@ -7,7 +7,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitanteTeste
     {
-        private const int Id = 55;
+        private const int Identificador = 55;
         private const string Nome = "Henrique Almeida";
 
         [Fact]
@@ -15,11 +15,11 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var solicitanteEsperado = new
             {
-                Id,
+                Identificador,
                 Nome
             };
 
-            var solicitante = new Solicitante(solicitanteEsperado.Id, solicitanteEsperado.Nome);
+            var solicitante = new Solicitante(solicitanteEsperado.Identificador, solicitanteEsperado.Nome);
 
             solicitanteEsperado.ToExpectedObject().ShouldMatch(solicitante);
         }
@@ -31,7 +31,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             const string mensagemEsperada = "Nome do solicitante é inválido";
 
-            AssertExtensions.ThrowsWithMessage(() => new Solicitante(Id, nomeInvalido), mensagemEsperada);
+            AssertExtensions.ThrowsWithMessage(() => new Solicitante(Identificador, nomeInvalido), mensagemEsperada);
         }
     }
 }

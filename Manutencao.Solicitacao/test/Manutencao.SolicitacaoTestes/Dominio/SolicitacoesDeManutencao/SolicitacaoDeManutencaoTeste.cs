@@ -18,14 +18,14 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         private const string GestorDoContrato = "Hugo Alvez";
         private readonly DateTime _dataFinalDaVigenciaDoContrato = DateTime.Now.AddMonths(2);
         private readonly TipoDeSolicitacaoDeManutencao _tipoDeSolicitacaoDeManutencao = TipoDeSolicitacaoDeManutencao.Jardinagem;
+        private string _identificadorDaSubsidiaria = "XPTO=33";
         private string _justificativa = "Grama muito alta";
         private DateTime _inicioDesejadoParaManutencao = DateTime.Now.AddDays(20);
-        private Subsidiaria _subsidiaria = FluentBuilder<Subsidiaria>.New().Build();
 
         private SolicitacaoDeManutencao CriarNovaSolicitacao()
         {
             return new SolicitacaoDeManutencao(
-                _subsidiaria,
+                _identificadorDaSubsidiaria,
                 IdentificadorDoSolicitante,
                 NomeDoSoliciante,
                 _tipoDeSolicitacaoDeManutencao,
@@ -43,7 +43,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             var solicitacao = new
             {
-                Subsidiaria = _subsidiaria,
+                IdentificadorDaSubsidiaria = _identificadorDaSubsidiaria,
                 Solicitante = new Solicitante(IdentificadorDoSolicitante, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa = _justificativa,
@@ -80,7 +80,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         public void Deve_validar_subsidiaria()
         {
             const string mensagemEsperada = "Subsidiária é inválida";
-            _subsidiaria = null;
+            _identificadorDaSubsidiaria = null;
 
             AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
         }

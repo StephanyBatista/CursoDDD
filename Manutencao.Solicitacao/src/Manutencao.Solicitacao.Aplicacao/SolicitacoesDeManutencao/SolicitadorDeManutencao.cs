@@ -32,15 +32,15 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 
             var tipoDeSolicitacaoDeManutencao =
                 Enum.Parse<TipoDeSolicitacaoDeManutencao>(dto.TipoDeSolicitacaoDeManutencao.ToString());
-            var solicitacaoDeManutencao = 
+            var solicitacaoDeManutencao =
                 new SolicitacaoDeManutencao(
-                    subsidiaria,
-                    dto.SolicitanteId, 
+                    subsidiaria.Id,
+                    dto.SolicitanteId,
                     dto.NomeDoSolicitante,
-                    tipoDeSolicitacaoDeManutencao, 
+                    tipoDeSolicitacaoDeManutencao,
                     dto.Justificativa,
-                    contratoDto.Numero, 
-                    contratoDto.NomeDaTerceirizada, 
+                    contratoDto.Numero,
+                    contratoDto.NomeDaTerceirizada,
                     contratoDto.CnpjDaTerceirizada,
                     contratoDto.GestorDoContrato,
                     contratoDto.DataFinalDaVigencia,
@@ -48,7 +48,7 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 
             var solicitacoesDeManutencaoPendentes =
                 _solicitacaoDeManutencaoRepositorio
-                    .ObterPendentesDoTipo(tipoDeSolicitacaoDeManutencao, subsidiaria);
+                    .ObterPendentesDoTipo(tipoDeSolicitacaoDeManutencao, subsidiaria.Id);
             _canceladorDeSolicitacoesDeManutencaoPendentes.Cancelar(solicitacoesDeManutencaoPendentes);
 
             _solicitacaoDeManutencaoRepositorio.Adicionar(solicitacaoDeManutencao);
