@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Manutencao.Solicitacao.Aplicacao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Microsoft.EntityFrameworkCore;
 
 namespace Manutencao.Solicitacao.Infra.BancoDeDados.Contexto
@@ -13,6 +14,7 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Contexto
         }
 
         public DbSet<SolicitacaoDeManutencao> SolicitacaoesDeManutencao { get; set; }
+        public DbSet<Subsidiaria> Subsidiarias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
