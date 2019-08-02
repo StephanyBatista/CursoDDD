@@ -1,56 +1,30 @@
-﻿using System;
-using Manutencao.Solicitacao.Aplicacao.Subsidiarias;
-using Manutencao.Solicitacao.Dominio;
-using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
+﻿using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 
 namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 {
     public class SolicitadorDeManutencao
     {
         private readonly ISolicitacaoDeManutencaoRepositorio _solicitacaoDeManutencaoRepositorio;
-        private readonly ISubsidiariaRepositorio _subsidiariaRepositorio;
-        private readonly IBuscadorDeContrato _buscadorDeContrato;
+        private readonly FabricaDeSolicitacaoDeManutencao _fabricaDeSolicitacaoDeManutencao;
         private readonly ICanceladorDeSolicitacoesDeManutencaoPendentes _canceladorDeSolicitacoesDeManutencaoPendentes;
 
         public SolicitadorDeManutencao(ISolicitacaoDeManutencaoRepositorio solicitacaoDeManutencaoRepositorio,
-            ISubsidiariaRepositorio subsidiariaRepositorio,
-            IBuscadorDeContrato buscadorDeContrato,
+            FabricaDeSolicitacaoDeManutencao fabricaDeSolicitacaoDeManutencao,
             ICanceladorDeSolicitacoesDeManutencaoPendentes canceladorDeSolicitacoesDeManutencaoPendentes)
         {
             _solicitacaoDeManutencaoRepositorio = solicitacaoDeManutencaoRepositorio;
-            _subsidiariaRepositorio = subsidiariaRepositorio;
-            _buscadorDeContrato = buscadorDeContrato;
+            _fabricaDeSolicitacaoDeManutencao = fabricaDeSolicitacaoDeManutencao;
             _canceladorDeSolicitacoesDeManutencaoPendentes = canceladorDeSolicitacoesDeManutencaoPendentes;
         }
 
         public void Solicitar(SolicitacaoDeManutencaoDto dto)
         {
-            var subsidiaria = _subsidiariaRepositorio.ObterPorId(dto.SubsidiariaId);
-
-            var contratoDto = _buscadorDeContrato.Buscar(dto.NumeroDoContrato).Result;
-            ExcecaoDeDominio.LancarQuando(contratoDto == null, "Contrato não encontrado no ERP");
-
-            var tipoDeSolicitacaoDeManutencao =
-                Enum.Parse<TipoDeSolicitacaoDeManutencao>(dto.TipoDeSolicitacaoDeManutencao.ToString());
-            var solicitacaoDeManutencao =
-                new SolicitacaoDeManutencao(
-                    subsidiaria.Id,
-                    dto.SolicitanteId,
-                    dto.NomeDoSolicitante,
-                    tipoDeSolicitacaoDeManutencao,
-                    dto.Justificativa,
-                    contratoDto.Numero,
-                    contratoDto.NomeDaTerceirizada,
-                    contratoDto.CnpjDaTerceirizada,
-                    contratoDto.GestorDoContrato,
-                    contratoDto.DataFinalDaVigencia,
-                    dto.InicioDesejadoParaManutencao);
+            var solicitacaoDeManutencao = _fabricaDeSolicitacaoDeManutencao.Fabricar(dto);
 
             var solicitacoesDeManutencaoPendentes =
                 _solicitacaoDeManutencaoRepositorio
-                    .ObterPendentesDoTipo(tipoDeSolicitacaoDeManutencao, subsidiaria.Id);
+                    .ObterPendentesDoTipo(solicitacaoDeManutencao.TipoDeSolicitacaoDeManutencao, solicitacaoDeManutencao.IdentificadorDaSubsidiaria);
             _canceladorDeSolicitacoesDeManutencaoPendentes.Cancelar(solicitacoesDeManutencaoPendentes);
-
             _solicitacaoDeManutencaoRepositorio.Adicionar(solicitacaoDeManutencao);
         }
     }
