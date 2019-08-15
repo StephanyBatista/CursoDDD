@@ -19,11 +19,5 @@ namespace Manutencao.Solicitacao.Api.Controllers
         {
             _solicitadorDeManutencao.Solicitar(dto);
         }
-
-        [HttpGet]
-        public string Get()
-        {
-            return "Olá";
-        }
     }
 }

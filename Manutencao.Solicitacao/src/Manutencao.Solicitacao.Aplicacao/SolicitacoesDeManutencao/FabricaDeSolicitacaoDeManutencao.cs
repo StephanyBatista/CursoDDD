@@ -12,7 +12,8 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 
         protected FabricaDeSolicitacaoDeManutencao() {}
 
-        public FabricaDeSolicitacaoDeManutencao(ISubsidiariaRepositorio subsidiariaRepositorio, IBuscadorDeContrato buscadorDeContrato)
+        public FabricaDeSolicitacaoDeManutencao(ISubsidiariaRepositorio subsidiariaRepositorio, 
+            IBuscadorDeContrato buscadorDeContrato)
         {
             _subsidiariaRepositorio = subsidiariaRepositorio;
             _buscadorDeContrato = buscadorDeContrato;
