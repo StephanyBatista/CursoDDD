@@ -10,13 +10,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Manutencao.Solicitacao.Infra.BancoDeDados\Manutencao.Solicitacao.Infra.BancoDeDados.csproj" />
-    <ProjectReference Include="..\Manutencao.Solicitacao.Infra.ErpContracts\Manutencao.Solicitacao.Infra.ErpContracts.csproj" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.1" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.1" />
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+    <ProjectReference Include="..\Manutencao.Solicitacao.Bootstrap\Manutencao.Solicitacao.Bootstrap.csproj" />
   </ItemGroup>
 
 </Project>

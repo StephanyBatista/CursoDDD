@@ -28,13 +28,13 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
             ExcecaoDeDominio.LancarQuando(contratoDto == null, "Contrato não encontrado no ERP");
 
             var tipoDeSolicitacaoDeManutencao =
-                Enum.Parse<TipoDeSolicitacaoDeManutencao>(dto.TipoDeSolicitacaoDeManutencao.ToString());
+                Enum.Parse(typeof(TipoDeSolicitacaoDeManutencao), dto.TipoDeSolicitacaoDeManutencao.ToString());
 
             return new SolicitacaoDeManutencao(
                     subsidiaria.Id,
                     dto.SolicitanteId,
                     dto.NomeDoSolicitante,
-                    tipoDeSolicitacaoDeManutencao,
+                    (TipoDeSolicitacaoDeManutencao)tipoDeSolicitacaoDeManutencao,
                     dto.Justificativa,
                     contratoDto.Numero,
                     contratoDto.NomeDaTerceirizada,

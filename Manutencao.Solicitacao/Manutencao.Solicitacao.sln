@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manutencao.Solicitacao.Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manutencao.Solicitacao.Api", "src\Manutencao.Solicitacao.Api\Manutencao.Solicitacao.Api.csproj", "{C680AFA8-9772-42A2-A527-4E8905DA47B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manutencao.Solicitacao.Infra.ErpContracts", "src\Manutencao.Solicitacao.Infra.ErpContracts\Manutencao.Solicitacao.Infra.ErpContracts.csproj", "{3AF00E9D-5F8B-4973-BEAE-660AEB2417C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manutencao.Solicitacao.Infra.ErpContracts", "src\Manutencao.Solicitacao.Infra.ErpContracts\Manutencao.Solicitacao.Infra.ErpContracts.csproj", "{3AF00E9D-5F8B-4973-BEAE-660AEB2417C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Manutencao.Solicitacao.Bootstrap", "src\Manutencao.Solicitacao.Bootstrap\Manutencao.Solicitacao.Bootstrap.csproj", "{172F1F31-1F84-46F4-A45E-04BACEB6AB60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3AF00E9D-5F8B-4973-BEAE-660AEB2417C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF00E9D-5F8B-4973-BEAE-660AEB2417C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF00E9D-5F8B-4973-BEAE-660AEB2417C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172F1F31-1F84-46F4-A45E-04BACEB6AB60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172F1F31-1F84-46F4-A45E-04BACEB6AB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172F1F31-1F84-46F4-A45E-04BACEB6AB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172F1F31-1F84-46F4-A45E-04BACEB6AB60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

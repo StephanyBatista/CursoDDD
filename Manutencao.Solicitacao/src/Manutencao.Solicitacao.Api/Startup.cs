@@ -1,14 +1,8 @@
-﻿using System.Linq;
-using Manutencao.Solicitacao.Aplicacao;
-using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
-using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
-using Manutencao.Solicitacao.Infra.BancoDeDados.Contexto;
-using Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio;
-using Manutencao.Solicitacao.Infra.ErpContracts;
+﻿using System.Xml.XPath;
+using Manutencao.Solicitacao.Bootstrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,27 +19,12 @@ namespace Manutencao.Solicitacao.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            Injecao.Inicializar(services, Configuration.GetConnectionString("DefaultConnection"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<ISolicitacaoDeManutencaoRepositorio, SolicitacaoDeManutencaoRepositorio>();
-            services.AddScoped<IBuscadorDeContrato>(buscador => new BuscadorDeContrato("http://localhost:3000/contracts"));
-            services.AddScoped<ICanceladorDeSolicitacoesDeManutencaoPendentes, CanceladorDeSolicitacoesDeManutencaoPendentes>();
-            services.AddScoped<SolicitadorDeManutencao, SolicitadorDeManutencao>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.Use(async (context, next) =>
-            {
-                await next.Invoke();
-                var unitOfWork = (IUnitOfWork)context.RequestServices.GetService(typeof(IUnitOfWork));
-                await unitOfWork.Commit();
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
