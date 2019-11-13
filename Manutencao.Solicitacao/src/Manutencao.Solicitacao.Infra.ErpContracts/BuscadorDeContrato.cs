@@ -36,6 +36,7 @@ namespace Manutencao.Solicitacao.Infra.ErpContracts
                     Numero = contratoDoErp.Id,
                     NomeDaTerceirizada = contratoDoErp.Company,
                     CnpjDaTerceirizada = contratoDoErp.CompanyId,
+                    GestorDoContrato = contratoDoErp.Manager,
                     DataFinalDaVigencia = DateTime.Parse(contratoDoErp.FinalDate)
                 };
             }

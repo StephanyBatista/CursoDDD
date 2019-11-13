@@ -1,4 +1,6 @@
-﻿using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
+﻿using System.Threading.Tasks;
+using Manutencao.Solicitacao.Aplicacao;
+using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manutencao.Solicitacao.Api.Controllers
@@ -7,17 +9,21 @@ namespace Manutencao.Solicitacao.Api.Controllers
     [ApiController]
     public class SolicitacaoDeManteucaoController : ControllerBase
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SolicitadorDeManutencao _solicitadorDeManutencao;
 
-        public SolicitacaoDeManteucaoController(SolicitadorDeManutencao solicitadorDeManutencao)
+        public SolicitacaoDeManteucaoController(IUnitOfWork unitOfWork,
+            SolicitadorDeManutencao solicitadorDeManutencao)
         {
+            _unitOfWork = unitOfWork;
             _solicitadorDeManutencao = solicitadorDeManutencao;
         }
 
         [HttpPost]
-        public void Post([FromBody] SolicitacaoDeManutencaoDto dto)
+        public async Task Post([FromBody] SolicitacaoDeManutencaoDto dto)
         {
             _solicitadorDeManutencao.Solicitar(dto);
+            await _unitOfWork.Commit();
         }
     }
 }

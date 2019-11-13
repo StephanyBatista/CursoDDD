@@ -1,4 +1,5 @@
 ﻿using System.Xml.XPath;
+using Manutencao.Solicitacao.Api.Filter;
 using Manutencao.Solicitacao.Bootstrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,11 @@ namespace Manutencao.Solicitacao.Api
         public void ConfigureServices(IServiceCollection services)
         {
             Injecao.Inicializar(services, Configuration.GetConnectionString("DefaultConnection"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(config =>
+                {
+                    config.Filters.Add(typeof(TratamentoDeExcecaoFilter));
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

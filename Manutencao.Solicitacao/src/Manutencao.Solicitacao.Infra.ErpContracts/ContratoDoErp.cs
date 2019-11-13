@@ -12,5 +12,7 @@ namespace Manutencao.Solicitacao.Infra.ErpContracts
         public string CompanyId { get; set; }
         [DataMember(Name = "finaldate")]
         public string FinalDate { get; set; }
+        [DataMember(Name = "manager")]
+        public string Manager { get; set; }
     }
 }
