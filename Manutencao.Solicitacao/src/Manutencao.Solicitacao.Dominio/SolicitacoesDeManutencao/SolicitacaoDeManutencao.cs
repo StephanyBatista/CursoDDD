@@ -1,17 +1,17 @@
 ﻿using System;
-using Manutencao.Solicitacao.Dominio.Subsidiarias;
 
 namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencao : Entidade
     {
-        public Solicitante Solicitante { get; private set; }
-        public string IdentificadorDaSubsidiaria { get; private set; }
-        public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; private set; }
-        public string Justificativa { get; private set; }
-        public Contrato Contrato { get; private set; }
+        public Autor Solicitante { get; }
+        public string IdentificadorDaSubsidiaria { get; }
+        public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
+        public string Justificativa { get; }
+        public Contrato Contrato { get; }
         public DateTime InicioDesejadoParaManutencao { get; private set; }
         public DateTime DataDaSolicitacao { get; private set; }
+        public Autor Aprovador { get; private set; }
         public StatusDaSolicitacao StatusDaSolicitacao { get; private set; }
 
         private SolicitacaoDeManutencao() { }
@@ -23,12 +23,11 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
-
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(identificadorDaSubsidiaria), "Subsidiária é inválida");
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(justificativa), "Justificativa inválida");
             ExcecaoDeDominio.LancarQuando(inicioDesejadoParaManutencao.Date < DateTime.Now.Date, "Data do inicio desejado não pode ser inferior a data de hoje");
 
-            Solicitante = new Solicitante(identificadorDoSolicitante, nomeDoSolicitante);
+            Solicitante = new Autor(identificadorDoSolicitante, nomeDoSolicitante);
             IdentificadorDaSubsidiaria = identificadorDaSubsidiaria;
             TipoDeSolicitacaoDeManutencao = tipoDeSolicitacaoDeManutencao;
             Justificativa = justificativa;
@@ -41,6 +40,12 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public void Cancelar()
         {
             StatusDaSolicitacao = StatusDaSolicitacao.Cancelada;
+        }
+
+        public void Reprovar(Autor solicitante)
+        {
+            Aprovador = solicitante;
+            StatusDaSolicitacao = StatusDaSolicitacao.Reprovada;
         }
     }
 }

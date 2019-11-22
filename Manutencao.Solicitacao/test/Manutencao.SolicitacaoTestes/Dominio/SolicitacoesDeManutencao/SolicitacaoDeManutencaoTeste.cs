@@ -1,7 +1,6 @@
 ﻿using System;
 using ExpectedObjects;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
-using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Manutencao.SolicitacaoTestes._Util;
 using Nosbor.FluentBuilder.Lib;
 using Xunit;
@@ -44,7 +43,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var solicitacao = new
             {
                 IdentificadorDaSubsidiaria = _identificadorDaSubsidiaria,
-                Solicitante = new Solicitante(IdentificadorDoSolicitante, NomeDoSoliciante),
+                Solicitante = new Autor(IdentificadorDoSolicitante, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa = _justificativa,
                 Contrato = new Contrato(NumeroDoContrato, NomeDaTerceirizadaDoContrato, CnpjDaTerceirizadaDoContrato, GestorDoContrato, _dataFinalDaVigenciaDoContrato),
@@ -85,16 +84,6 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
         }
 
-        [Fact]
-        public void Deve_cancelar_solicitacao_de_manutencao()
-        {
-            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
-
-            solicitacao.Cancelar();
-
-            Assert.Equal(StatusDaSolicitacao.Cancelada, solicitacao.StatusDaSolicitacao);
-        }
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
@@ -114,6 +103,28 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             _inicioDesejadoParaManutencao = dataInvalida;
 
             AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
+        }
+
+        [Fact]
+        public void Deve_cancelar_solicitacao_de_manutencao()
+        {
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Cancelar();
+
+            Assert.Equal(StatusDaSolicitacao.Cancelada, solicitacao.StatusDaSolicitacao);
+        }
+
+        [Fact]
+        public void Deve_reprovar_solicitacao_de_manutencao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Reprovar(aprovador);
+
+            Assert.Equal(StatusDaSolicitacao.Reprovada, solicitacao.StatusDaSolicitacao);
+            Assert.Equal(aprovador, solicitacao.Aprovador);
         }
     }
 }

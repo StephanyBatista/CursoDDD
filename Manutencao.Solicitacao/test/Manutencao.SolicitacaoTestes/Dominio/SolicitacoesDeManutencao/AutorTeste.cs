@@ -5,33 +5,33 @@ using Xunit;
 
 namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
 {
-    public class SolicitanteTeste
+    public class AutorTeste
     {
         private const int Identificador = 55;
         private const string Nome = "Henrique Almeida";
 
         [Fact]
-        public void Deve_criar_solicitante()
+        public void Deve_criar()
         {
-            var solicitanteEsperado = new
+            var autorEsperado = new
             {
                 Identificador,
                 Nome
             };
 
-            var solicitante = new Solicitante(solicitanteEsperado.Identificador, solicitanteEsperado.Nome);
+            var autor = new Autor(autorEsperado.Identificador, autorEsperado.Nome);
 
-            solicitanteEsperado.ToExpectedObject().ShouldMatch(solicitante);
+            autorEsperado.ToExpectedObject().ShouldMatch(autor);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Deve_validar_nome_do_solicitante(string nomeInvalido)
+        public void Deve_validar_nome(string nomeInvalido)
         {
             const string mensagemEsperada = "Nome do solicitante é inválido";
 
-            AssertExtensions.ThrowsWithMessage(() => new Solicitante(Identificador, nomeInvalido), mensagemEsperada);
+            AssertExtensions.ThrowsWithMessage(() => new Autor(Identificador, nomeInvalido), mensagemEsperada);
         }
     }
 }
