@@ -19,7 +19,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
                 Nome
             };
 
-            var solicitante = new Solicitante(solicitanteEsperado.Identificador, solicitanteEsperado.Nome);
+            var solicitante = new Autor(solicitanteEsperado.Identificador, solicitanteEsperado.Nome);
 
             solicitanteEsperado.ToExpectedObject().ShouldMatch(solicitante);
         }
@@ -31,7 +31,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
         {
             const string mensagemEsperada = "Nome do solicitante é inválido";
 
-            AssertExtensions.ThrowsWithMessage(() => new Solicitante(Identificador, nomeInvalido), mensagemEsperada);
+            AssertExtensions.ThrowsWithMessage(() => new Autor(Identificador, nomeInvalido), mensagemEsperada);
         }
     }
 }

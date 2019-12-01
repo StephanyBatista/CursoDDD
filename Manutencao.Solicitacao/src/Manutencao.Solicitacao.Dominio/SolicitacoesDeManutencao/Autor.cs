@@ -1,13 +1,13 @@
 ﻿namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
-    public class Solicitante
+    public class Autor
     {
         public int Identificador { get; private set; }
         public string Nome { get; private set; }
 
-        private Solicitante() { }
+        private Autor() { }
 
-        public Solicitante(int identificador, string nome)
+        public Autor(int identificador, string nome)
         {
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(nome), "Nome do solicitante é inválido");
 

@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Manutencao.Solicitacao.Infra.BancoDeDados\Manutencao.Solicitacao.Infra.BancoDeDados.csproj" />
+    <ProjectReference Include="..\Manutencao.Solicitacao.Infra.ContextoDeServico\Manutencao.Solicitacao.Infra.ContextoDeServico.csproj" />
+    <ProjectReference Include="..\Manutencao.Solicitacao.Infra.Email\Manutencao.Solicitacao.Infra.Email.csproj" />
     <ProjectReference Include="..\Manutencao.Solicitacao.Infra.ErpContracts\Manutencao.Solicitacao.Infra.ErpContracts.csproj" />
   </ItemGroup>
 

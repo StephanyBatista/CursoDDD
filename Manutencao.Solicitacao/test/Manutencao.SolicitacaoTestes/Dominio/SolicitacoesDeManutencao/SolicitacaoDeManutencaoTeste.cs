@@ -44,7 +44,7 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             var solicitacao = new
             {
                 IdentificadorDaSubsidiaria = _identificadorDaSubsidiaria,
-                Solicitante = new Solicitante(IdentificadorDoSolicitante, NomeDoSoliciante),
+                Solicitante = new Autor(IdentificadorDoSolicitante, NomeDoSoliciante),
                 TipoDeSolicitacaoDeManutencao = _tipoDeSolicitacaoDeManutencao,
                 Justificativa = _justificativa,
                 Contrato = new Contrato(NumeroDoContrato, NomeDaTerceirizadaDoContrato, CnpjDaTerceirizadaDoContrato, GestorDoContrato, _dataFinalDaVigenciaDoContrato),
@@ -114,6 +114,50 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             _inicioDesejadoParaManutencao = dataInvalida;
 
             AssertExtensions.ThrowsWithMessage(() => CriarNovaSolicitacao(), mensagemEsperada);
+        }
+
+        [Fact]
+        public void Deve_reprovar_solicitacao_de_manutencao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Reprovar(aprovador);
+
+            Assert.Equal(StatusDaSolicitacao.Reprovada, solicitacao.StatusDaSolicitacao);
+        }
+
+        [Fact]
+        public void Deve_informar_o_aprovador_da_reprovacao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Reprovar(aprovador);
+
+            Assert.Equal(aprovador, solicitacao.Aprovador);
+        }
+
+        [Fact]
+        public void Deve_aprovar_solicitacao_de_manutencao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Aprovar(aprovador);
+
+            Assert.Equal(StatusDaSolicitacao.Aprovada, solicitacao.StatusDaSolicitacao);
+        }
+
+        [Fact]
+        public void Deve_informar_o_aprovador_da_aprovacao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Aprovar(aprovador);
+
+            Assert.Equal(aprovador, solicitacao.Aprovador);
         }
     }
 }

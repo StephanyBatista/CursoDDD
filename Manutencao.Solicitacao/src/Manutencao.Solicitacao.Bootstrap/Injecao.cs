@@ -2,9 +2,10 @@
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Aplicacao.Subsidiarias;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
-using Manutencao.Solicitacao.Dominio.Subsidiarias;
 using Manutencao.Solicitacao.Infra.BancoDeDados.Contexto;
 using Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio;
+using Manutencao.Solicitacao.Infra.ContextoDeServico;
+using Manutencao.Solicitacao.Infra.Email;
 using Manutencao.Solicitacao.Infra.ErpContracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,10 +24,15 @@ namespace Manutencao.Solicitacao.Bootstrap
             services.AddScoped<ISubsidiariaRepositorio, SubsidiariaRepositorio>();
             services.AddScoped<IBuscadorDeContrato>(buscador => 
                 new BuscadorDeContrato("http://localhost:3000/contracts"));
+            services.AddScoped<INotificaContextoDeServico>(buscador =>
+                new NotificaContextoDeServico("http://localhost:3000/contracts"));
+            services.AddScoped<INotificaReprovacaoParaSolicitante,
+                NotificaReprovacaoParaSolicitante>();
             services.AddScoped<ICanceladorDeSolicitacoesDeManutencaoPendentes, 
                 CanceladorDeSolicitacoesDeManutencaoPendentes>();
             services.AddScoped<SolicitadorDeManutencao, SolicitadorDeManutencao>();
             services.AddScoped<FabricaDeSolicitacaoDeManutencao, FabricaDeSolicitacaoDeManutencao>();
+            services.AddScoped<AnaliseDeAprovacaoDaSolicitacaoDeManutencao, AnaliseDeAprovacaoDaSolicitacaoDeManutencao>();
         }
     }
 }

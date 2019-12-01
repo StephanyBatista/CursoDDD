@@ -3,6 +3,8 @@
     public enum StatusDaSolicitacao
     {
         Pendente,
-        Cancelada
+        Cancelada,
+        Reprovada,
+        Aprovada
     }
 }
