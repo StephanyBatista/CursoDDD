@@ -4,6 +4,7 @@
     {
         Pendente,
         Cancelada,
-        Reprovada
+        Reprovada,
+        Aprovada
     }
 }

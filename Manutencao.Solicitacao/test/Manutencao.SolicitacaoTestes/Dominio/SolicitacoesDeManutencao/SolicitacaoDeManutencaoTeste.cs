@@ -126,5 +126,17 @@ namespace Manutencao.SolicitacaoTestes.Dominio.SolicitacoesDeManutencao
             Assert.Equal(StatusDaSolicitacao.Reprovada, solicitacao.StatusDaSolicitacao);
             Assert.Equal(aprovador, solicitacao.Aprovador);
         }
+
+        [Fact]
+        public void Deve_aprovar_solicitacao_de_manutencao()
+        {
+            var aprovador = new Autor(1, "Reprovador");
+            var solicitacao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
+
+            solicitacao.Aprovar(aprovador);
+
+            Assert.Equal(StatusDaSolicitacao.Aprovada, solicitacao.StatusDaSolicitacao);
+            Assert.Equal(aprovador, solicitacao.Aprovador);
+        }
     }
 }

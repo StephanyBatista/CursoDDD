@@ -4,11 +4,11 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
 {
     public class SolicitacaoDeManutencao : Entidade
     {
-        public Autor Solicitante { get; }
-        public string IdentificadorDaSubsidiaria { get; }
+        public Autor Solicitante { get; private set; }
+        public string IdentificadorDaSubsidiaria { get; private set; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
-        public string Justificativa { get; }
-        public Contrato Contrato { get; }
+        public string Justificativa { get; private set; }
+        public Contrato Contrato { get; private set; }
         public DateTime InicioDesejadoParaManutencao { get; private set; }
         public DateTime DataDaSolicitacao { get; private set; }
         public Autor Aprovador { get; private set; }
@@ -42,10 +42,16 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             StatusDaSolicitacao = StatusDaSolicitacao.Cancelada;
         }
 
-        public void Reprovar(Autor solicitante)
+        public void Reprovar(Autor aprovador)
         {
-            Aprovador = solicitante;
+            Aprovador = aprovador;
             StatusDaSolicitacao = StatusDaSolicitacao.Reprovada;
+        }
+
+        public void Aprovar(Autor aprovador)
+        {
+            Aprovador = aprovador;
+            StatusDaSolicitacao = StatusDaSolicitacao.Aprovada;
         }
     }
 }
