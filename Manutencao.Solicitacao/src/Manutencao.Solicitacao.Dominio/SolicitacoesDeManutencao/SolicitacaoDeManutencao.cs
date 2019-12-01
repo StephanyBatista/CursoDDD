@@ -8,7 +8,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public string IdentificadorDaSubsidiaria { get; private set; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
         public string Justificativa { get; private set; }
-        public Contrato Contrato { get; private set; }
+        public Contrato Contrato { get; private set; }  
         public DateTime InicioDesejadoParaManutencao { get; private set; }
         public DateTime DataDaSolicitacao { get; private set; }
         public Autor Aprovador { get; private set; }
