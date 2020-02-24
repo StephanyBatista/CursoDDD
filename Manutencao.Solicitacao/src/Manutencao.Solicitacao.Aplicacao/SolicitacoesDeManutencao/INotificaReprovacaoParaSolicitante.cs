@@ -2,7 +2,7 @@
 
 namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 {
-    public interface INotificaContextoDeServico
+    public interface INotificaReprovacaoParaSolicitante
     {
         void Notificar(SolicitacaoDeManutencao solicitacaoDeManutencao);
     }

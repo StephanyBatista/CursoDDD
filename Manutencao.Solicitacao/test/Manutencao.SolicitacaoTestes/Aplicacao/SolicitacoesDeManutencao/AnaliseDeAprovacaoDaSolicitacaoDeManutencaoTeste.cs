@@ -1,4 +1,4 @@
-using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
+Ôªøusing Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 using Manutencao.SolicitacaoTestes._Util;
 using Nosbor.FluentBuilder.Lib;
@@ -12,7 +12,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         private readonly AnaliseDeAprovacaoDto _dto;
         private readonly AnaliseDeAprovacaoDaSolicitacaoDeManutencao _analiseDeAprovacaoDaSolicitacao;
         private readonly SolicitacaoDeManutencao _solicitacaoDeManutencao;
-        private readonly IEmailDeReprovacaoParaSolicitante _emailDeReprovacaoParaSolicitante;
+        private readonly INotificaReprovacaoParaSolicitante _notificaReprovacaoParaSolicitante;
         private readonly INotificaContextoDeServico _notificaContextoDeServico;
 
         public AnaliseDeAprovacaoDaSolicitacaoDeManutencaoTeste()
@@ -22,12 +22,12 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
             _solicitacaoDeManutencao = FluentBuilder<SolicitacaoDeManutencao>.New().Build();
             var solicitacaoDeManutencaoRepositorio = Substitute.For<ISolicitacaoDeManutencaoRepositorio>();
             solicitacaoDeManutencaoRepositorio.ObterPorId(_dto.IdDaSolicitacao).Returns(_solicitacaoDeManutencao);
-            _emailDeReprovacaoParaSolicitante = Substitute.For<IEmailDeReprovacaoParaSolicitante>();
+            _notificaReprovacaoParaSolicitante = Substitute.For<INotificaReprovacaoParaSolicitante>();
             _notificaContextoDeServico = Substitute.For<INotificaContextoDeServico>();
             _analiseDeAprovacaoDaSolicitacao = 
                 new AnaliseDeAprovacaoDaSolicitacaoDeManutencao(
                     solicitacaoDeManutencaoRepositorio,
-                    _emailDeReprovacaoParaSolicitante,
+                    _notificaReprovacaoParaSolicitante,
                     _notificaContextoDeServico);
         }
 
@@ -48,7 +48,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
 
             _analiseDeAprovacaoDaSolicitacao.Analisar(_dto);
 
-            _emailDeReprovacaoParaSolicitante.Received(1).Enviar(_solicitacaoDeManutencao);
+            _notificaReprovacaoParaSolicitante.Received(1).Notificar(_solicitacaoDeManutencao);
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace Manutencao.SolicitacaoTestes.Aplicacao.SolicitacoesDeManutencao
         [Fact]
         public void Deve_validar_solicitacao_de_manutencao_a_ser_analisada()
         {
-            const string mensagemEsperada = "SolicitaÁ„o n„o encontrada";
+            const string mensagemEsperada = "Solicita√ß√£o n√£o encontrada";
             const string idDaSolicitacaoInvalido = "WERT";
             _dto.IdDaSolicitacao = idDaSolicitacaoInvalido;
 

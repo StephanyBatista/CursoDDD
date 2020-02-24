@@ -5,13 +5,13 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
     public class SolicitacaoDeManutencao : Entidade
     {
         public Autor Solicitante { get; private set; }
+        public Autor Aprovador { get; private set; }
         public string IdentificadorDaSubsidiaria { get; private set; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; }
         public string Justificativa { get; private set; }
         public Contrato Contrato { get; private set; }  
         public DateTime InicioDesejadoParaManutencao { get; private set; }
         public DateTime DataDaSolicitacao { get; private set; }
-        public Autor Aprovador { get; private set; }
         public StatusDaSolicitacao StatusDaSolicitacao { get; private set; }
 
         private SolicitacaoDeManutencao() { }
@@ -19,8 +19,8 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
         public SolicitacaoDeManutencao(string identificadorDaSubsidiaria, 
             int identificadorDoSolicitante, string nomeDoSolicitante,
             TipoDeSolicitacaoDeManutencao tipoDeSolicitacaoDeManutencao,
-            string justificativa,
-            string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, string gestorDoContrato, DateTime dataFinalDaVigência,
+            string justificativa, string numeroDoContrato, string nomeDaTerceirizada, string cnpjDaTerceirizada, 
+            string gestorDoContrato, DateTime dataFinalDaVigência,
             DateTime inicioDesejadoParaManutencao)
         {
             ExcecaoDeDominio.LancarQuando(string.IsNullOrEmpty(identificadorDaSubsidiaria), "Subsidiária é inválida");
@@ -35,6 +35,8 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
             StatusDaSolicitacao = StatusDaSolicitacao.Pendente;
+            //TODO: Por motivos do EF Core, sempre um owned deve ser atribuido :(.
+            Aprovador = new Autor(0, "Sem aprovador");
         }
 
         public void Cancelar()

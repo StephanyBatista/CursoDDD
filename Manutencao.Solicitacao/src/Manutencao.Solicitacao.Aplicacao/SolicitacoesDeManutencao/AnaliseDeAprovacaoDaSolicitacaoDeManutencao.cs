@@ -1,4 +1,4 @@
-using Manutencao.Solicitacao.Dominio;
+Ôªøusing Manutencao.Solicitacao.Dominio;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 
 namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
@@ -6,23 +6,23 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
     public class AnaliseDeAprovacaoDaSolicitacaoDeManutencao
     {
         private readonly ISolicitacaoDeManutencaoRepositorio _solicitacaoDeManutencaoRepositorio;
-        private readonly IEmailDeReprovacaoParaSolicitante _emailDeReprovacaoParaSolicitante;
+        private readonly INotificaReprovacaoParaSolicitante _notificaReprovacaoParaSolicitante;
         private readonly INotificaContextoDeServico _notificaContextoDeServico;
 
         public AnaliseDeAprovacaoDaSolicitacaoDeManutencao(
             ISolicitacaoDeManutencaoRepositorio solicitacaoDeManutencaoRepositorio,
-            IEmailDeReprovacaoParaSolicitante emailDeReprovacaoParaSolicitante,
+            INotificaReprovacaoParaSolicitante notificaReprovacaoParaSolicitante,
             INotificaContextoDeServico notificaContextoDeServico)
         {
             _solicitacaoDeManutencaoRepositorio = solicitacaoDeManutencaoRepositorio;
-            _emailDeReprovacaoParaSolicitante = emailDeReprovacaoParaSolicitante;
+            _notificaReprovacaoParaSolicitante = notificaReprovacaoParaSolicitante;
             _notificaContextoDeServico = notificaContextoDeServico;
         }
 
         public void Analisar(AnaliseDeAprovacaoDto dto)
         {
             var solicitacao = _solicitacaoDeManutencaoRepositorio.ObterPorId(dto.IdDaSolicitacao);
-            ExcecaoDeDominio.LancarQuando(solicitacao == null, "SolicitaÁ„o n„o encontrada");
+            ExcecaoDeDominio.LancarQuando(solicitacao == null, "Solicita√ß√£o n√£o encontrada");
 
             if (dto.Aprovado)
             {
@@ -32,7 +32,7 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
             else
             {
                 solicitacao.Reprovar(new Autor(dto.AprovadorId, dto.NomeDoAprovador));
-                _emailDeReprovacaoParaSolicitante.Enviar(solicitacao);
+                _notificaReprovacaoParaSolicitante.Notificar(solicitacao);
             }
         }
     }

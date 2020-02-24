@@ -25,6 +25,8 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Contexto
             modelBuilder.Entity<SolicitacaoDeManutencao>()
                 .OwnsOne(p => p.Solicitante);
             modelBuilder.Entity<SolicitacaoDeManutencao>()
+                .OwnsOne(p => p.Aprovador);
+            modelBuilder.Entity<SolicitacaoDeManutencao>()
                 .OwnsOne(p => p.Contrato);
         }
 

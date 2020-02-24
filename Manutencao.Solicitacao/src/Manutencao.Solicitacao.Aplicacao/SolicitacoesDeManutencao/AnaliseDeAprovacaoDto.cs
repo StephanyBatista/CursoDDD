@@ -1,4 +1,4 @@
-namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
+﻿namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
 {
     public class AnaliseDeAprovacaoDto
     {
