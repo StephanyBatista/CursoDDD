@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Manutencao.Solicitacao.Aplicacao;
 using Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +14,17 @@ namespace Manutencao.Solicitacao.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly SolicitadorDeManutencao _solicitadorDeManutencao;
         private readonly AnaliseDeAprovacaoDaSolicitacaoDeManutencao _analiseDeAprovacaoDaSolicitacaoDeManutencao;
+        private readonly ISolicitacaoDeManutencaoRepositorio _solicitacaoDeManutencaoRepositorio;
 
         public SolicitacaoDeManutencaoController(IUnitOfWork unitOfWork,
             SolicitadorDeManutencao solicitadorDeManutencao, 
-            AnaliseDeAprovacaoDaSolicitacaoDeManutencao analiseDeAprovacaoDaSolicitacaoDeManutencao)
+            AnaliseDeAprovacaoDaSolicitacaoDeManutencao analiseDeAprovacaoDaSolicitacaoDeManutencao, 
+            ISolicitacaoDeManutencaoRepositorio solicitacaoDeManutencaoRepositorio)
         {
             _unitOfWork = unitOfWork;
             _solicitadorDeManutencao = solicitadorDeManutencao;
             _analiseDeAprovacaoDaSolicitacaoDeManutencao = analiseDeAprovacaoDaSolicitacaoDeManutencao;
+            _solicitacaoDeManutencaoRepositorio = solicitacaoDeManutencaoRepositorio;
         }
 
         [HttpPost]
@@ -35,6 +40,23 @@ namespace Manutencao.Solicitacao.Api.Controllers
             await _analiseDeAprovacaoDaSolicitacaoDeManutencao.Analisar(dto);
             await _unitOfWork.Commit();
             return Ok();
+        }
+
+        [HttpGet("pendentes/{identificadorDaSubsidiaria}")]
+        public IEnumerable<dynamic> Get(string identificadorDaSubsidiaria)
+        {
+            var solicitacoesPendentes = _solicitacaoDeManutencaoRepositorio.ObterPendentesDa(identificadorDaSubsidiaria);
+
+            return solicitacoesPendentes.Select(solicitacao => new
+            {
+                solicitacao.Id,
+                solicitacao.DataDaSolicitacao,
+                solicitacao.Justificativa,
+                NomeDoSolicitante = solicitacao.Solicitante.Nome,
+                Contrato = solicitacao.Contrato.Numero,
+                solicitacao.InicioDesejadoParaManutencao,
+                TipoDeSolicitacaoDeManutencao = solicitacao.TipoDeSolicitacaoDeManutencao.ToString()
+            }).ToList();
         }
     }
 }

@@ -19,7 +19,16 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Repositorio
             return Context.Set<SolicitacaoDeManutencao>()
                 .Where(entidade => 
                     entidade.TipoDeSolicitacaoDeManutencao == tipo &&
-                    entidade.IdentificadorDaSubsidiaria == identificadorDaSubsidiaria);
+                    entidade.IdentificadorDaSubsidiaria == identificadorDaSubsidiaria &&
+                    entidade.StatusDaSolicitacao == StatusDaSolicitacao.Pendente);
+        }
+
+        public IEnumerable<SolicitacaoDeManutencao> ObterPendentesDa(string identificadorDaSubsidiaria)
+        {
+            return Context.Set<SolicitacaoDeManutencao>()
+                .Where(entidade =>
+                    entidade.IdentificadorDaSubsidiaria == identificadorDaSubsidiaria &&
+                    entidade.StatusDaSolicitacao == StatusDaSolicitacao.Pendente);
         }
     }
 }
