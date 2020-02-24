@@ -5,7 +5,7 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
     public class SolicitacaoDeManutencao : Entidade
     {
         public Autor Solicitante { get; private set; }
-        public Autor Aprovador { get; set; }
+        public Autor Aprovador { get; private set; }
         public string IdentificadorDaSubsidiaria { get; private set; }
         public TipoDeSolicitacaoDeManutencao TipoDeSolicitacaoDeManutencao { get; private set; }
         public string Justificativa { get; private set; }
@@ -36,6 +36,8 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             InicioDesejadoParaManutencao = inicioDesejadoParaManutencao;
             DataDaSolicitacao = DateTime.Now;
             StatusDaSolicitacao = StatusDaSolicitacao.Pendente;
+            //TODO: Por motivos do EF Core, sempre um owned deve ser atribuido :(.
+            Aprovador = new Autor(0, "Sem aprovador");
         }
 
         public void Cancelar()

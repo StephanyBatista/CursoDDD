@@ -9,7 +9,7 @@ namespace Manutencao.Solicitacao.Infra.BancoDeDados.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "Aprovador_Identificador",
                 table: "SolicitacaoDeManutecao",
-                nullable: false,
+                nullable: true,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
