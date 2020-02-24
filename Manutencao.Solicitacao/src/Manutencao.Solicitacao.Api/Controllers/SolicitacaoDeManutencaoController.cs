@@ -7,12 +7,12 @@ namespace Manutencao.Solicitacao.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SolicitacaoDeManteucaoController : ControllerBase
+    public class SolicitacaoDeManutencaoController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly SolicitadorDeManutencao _solicitadorDeManutencao;
 
-        public SolicitacaoDeManteucaoController(IUnitOfWork unitOfWork,
+        public SolicitacaoDeManutencaoController(IUnitOfWork unitOfWork,
             SolicitadorDeManutencao solicitadorDeManutencao)
         {
             _unitOfWork = unitOfWork;
