@@ -9,7 +9,7 @@ namespace Manutencao.Solicitacao.Api.Filter
         public void OnException(ExceptionContext context)
         {
             var status = context.Exception is ExcecaoDeDominio ? 400 : 500;
-            var mensagem = status == 400 ? context.Exception.Message : "Ops, servidor falhou";
+            var mensagem = status == 400 ? context.Exception.Message : context.Exception.Message;
             var response = context.HttpContext.Response;
 
             response.StatusCode = (int)status;

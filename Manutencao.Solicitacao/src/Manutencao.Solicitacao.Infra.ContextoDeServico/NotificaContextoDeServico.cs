@@ -30,7 +30,9 @@ namespace Manutencao.Solicitacao.Infra.ContextoDeServico
                     NumeroDoContrato = solicitacaoDeManutencao.Contrato.Numero
                 });
                 var conteudo = new StringContent(conteudoDoJson, Encoding.UTF8, "application/json");
-                var respostaDoServidor = await cliente.PostAsync($"{_endereco}/servico", conteudo);
+                var respostaDoServidor = await cliente.PostAsync(_endereco, conteudo);
+
+                Console.WriteLine("Status: " + respostaDoServidor.IsSuccessStatusCode);
 
                 if (!respostaDoServidor.IsSuccessStatusCode)
                     throw new Exception("Comunicação com contexto de serviço não disponível");

@@ -25,7 +25,7 @@ namespace Manutencao.Solicitacao.Bootstrap
             services.AddScoped<IBuscadorDeContrato>(buscador => 
                 new BuscadorDeContrato("http://localhost:3000/contracts"));
             services.AddScoped<INotificaContextoDeServico>(buscador =>
-                new NotificaContextoDeServico("http://localhost:3000/contracts"));
+                new NotificaContextoDeServico("http://localhost:3000/servico"));
             services.AddScoped<INotificaReprovacaoParaSolicitante,
                 NotificaReprovacaoParaSolicitante>();
             services.AddScoped<ICanceladorDeSolicitacoesDeManutencaoPendentes, 

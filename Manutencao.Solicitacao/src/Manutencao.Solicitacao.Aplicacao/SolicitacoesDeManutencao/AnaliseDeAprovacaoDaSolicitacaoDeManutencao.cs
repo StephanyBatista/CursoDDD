@@ -1,4 +1,5 @@
-﻿using Manutencao.Solicitacao.Dominio;
+﻿using System.Threading.Tasks;
+using Manutencao.Solicitacao.Dominio;
 using Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao;
 
 namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
@@ -19,24 +20,26 @@ namespace Manutencao.Solicitacao.Aplicacao.SolicitacoesDeManutencao
             _notificaContextoDeServico = notificaContextoDeServico;
         }
 
-        public void Analisar(AnaliseDeAprovacaoDto analiseDeAprovacaoDto)
+        public async Task Analisar(AnaliseDeAprovacaoDto analiseDeAprovacaoDto)
         {
             var solicitacaoDeManutencao =
                 _solicitacaoDeManutencaoRepositorio.ObterPorId(analiseDeAprovacaoDto.IdDaSolicitacao);
             ExcecaoDeDominio.LancarQuando(solicitacaoDeManutencao == null, "Solicitação não encontrada");
+            ExcecaoDeDominio.LancarQuando(solicitacaoDeManutencao.Reprovada(), "Solicitação já analisada e está reprovada");
+            ExcecaoDeDominio.LancarQuando(solicitacaoDeManutencao.Aprovada(), "Solicitação já analisada e está aprovada");
 
-            var aprovador = new Autor(analiseDeAprovacaoDto.IdentificadorDoAprovador, analiseDeAprovacaoDto.NomeDoAprovador);
+            var aprovador = new Autor(analiseDeAprovacaoDto.AprovadorId, analiseDeAprovacaoDto.NomeDoAprovador);
 
             if (analiseDeAprovacaoDto.Aprovado)
-                Aprovar(solicitacaoDeManutencao, aprovador);
+                await Aprovar(solicitacaoDeManutencao, aprovador);
             else
                 Reprovar(solicitacaoDeManutencao, aprovador);
         }
 
-        private void Aprovar(SolicitacaoDeManutencao solicitacaoDeManutencao, Autor aprovador)
+        private async Task Aprovar(SolicitacaoDeManutencao solicitacaoDeManutencao, Autor aprovador)
         {
             solicitacaoDeManutencao.Aprovar(aprovador);
-            _notificaContextoDeServico.Notificar(solicitacaoDeManutencao);
+            await _notificaContextoDeServico.Notificar(solicitacaoDeManutencao);
         }
 
         private void Reprovar(SolicitacaoDeManutencao solicitacaoDeManutencao, Autor aprovador)

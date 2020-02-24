@@ -56,5 +56,15 @@ namespace Manutencao.Solicitacao.Dominio.SolicitacoesDeManutencao
             StatusDaSolicitacao = StatusDaSolicitacao.Aprovada;
             Aprovador = aprovador;
         }
+
+        public bool Reprovada()
+        {
+            return StatusDaSolicitacao == StatusDaSolicitacao.Reprovada;
+        }
+
+        public bool Aprovada()
+        {
+            return StatusDaSolicitacao == StatusDaSolicitacao.Aprovada;
+        }
     }
 }

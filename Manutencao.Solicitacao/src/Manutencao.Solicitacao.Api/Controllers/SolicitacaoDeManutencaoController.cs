@@ -11,12 +11,15 @@ namespace Manutencao.Solicitacao.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly SolicitadorDeManutencao _solicitadorDeManutencao;
+        private readonly AnaliseDeAprovacaoDaSolicitacaoDeManutencao _analiseDeAprovacaoDaSolicitacaoDeManutencao;
 
         public SolicitacaoDeManutencaoController(IUnitOfWork unitOfWork,
-            SolicitadorDeManutencao solicitadorDeManutencao)
+            SolicitadorDeManutencao solicitadorDeManutencao, 
+            AnaliseDeAprovacaoDaSolicitacaoDeManutencao analiseDeAprovacaoDaSolicitacaoDeManutencao)
         {
             _unitOfWork = unitOfWork;
             _solicitadorDeManutencao = solicitadorDeManutencao;
+            _analiseDeAprovacaoDaSolicitacaoDeManutencao = analiseDeAprovacaoDaSolicitacaoDeManutencao;
         }
 
         [HttpPost]
@@ -24,6 +27,14 @@ namespace Manutencao.Solicitacao.Api.Controllers
         {
             _solicitadorDeManutencao.Solicitar(dto);
             await _unitOfWork.Commit();
+        }
+
+        [HttpPut("analise")]
+        public async Task<IActionResult> Put([FromBody] AnaliseDeAprovacaoDto dto)
+        {
+            await _analiseDeAprovacaoDaSolicitacaoDeManutencao.Analisar(dto);
+            await _unitOfWork.Commit();
+            return Ok();
         }
     }
 }

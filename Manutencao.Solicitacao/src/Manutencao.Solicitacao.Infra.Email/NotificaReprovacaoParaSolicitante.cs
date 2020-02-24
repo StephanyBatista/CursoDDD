@@ -7,7 +7,7 @@ namespace Manutencao.Solicitacao.Infra.Email
     {
         public void Notificar(SolicitacaoDeManutencao solicitacaoDeManutencao)
         {
-            
+            //TODO: Implementar envio de e-mail. Como este código tem fins educativo não será implementado
         }
     }
 }

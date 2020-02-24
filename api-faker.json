@@ -1,7 +1,35 @@
 {
   "contracts": [
-    	{ "id": "25443", "company": "Grama SA", "Manager": "Eduardo Sales", "companyid": "00000000000000", "finaldate": "01/01/2025" },
-			{ "id": "25444", "company": "El�trica SA", "Manager": "Eduardo Sales", "companyid": "00000000000001", "finaldate": "01/01/2025" },
-			{ "id": "25445", "company": "Canos SA", "Manager": "Eduardo Sales", "companyid": "00000000000002", "finaldate": "01/01/2025" }
+    {
+      "id": "25443",
+      "company": "Grama SA",
+      "Manager": "Eduardo Sales",
+      "companyid": "00000000000000",
+      "finaldate": "01/01/2025"
+    },
+    {
+      "id": "25444",
+      "company": "El�trica SA",
+      "Manager": "Eduardo Sales",
+      "companyid": "00000000000001",
+      "finaldate": "01/01/2025"
+    },
+    {
+      "id": "25445",
+      "company": "Canos SA",
+      "Manager": "Eduardo Sales",
+      "companyid": "00000000000002",
+      "finaldate": "01/01/2025"
+    }
+  ],
+  "servico": [
+    {
+      "Id": "bfd28471-075f-4053-bf58-04843947423e",
+      "Justificativa": "Teste",
+      "DataDaSolicitacao": "2020-02-24T13:42:28.0866541",
+      "IdentificadorDaSubsidiaria": "B1264503-C1BD-4847-BB27-F1B61E982A1D",
+      "NumeroDoContrato": "25443",
+      "id": 1
+    }
   ]
 }
